@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="465.69mm" height="303.06mm" viewBox="0 0 465.69 303.06">
 <title>Panpipes E3 to E4, hex-row, chamfer edge, sheet 2 of 4</title>
-<desc>1 user unit = 1mm. Panpipes, E3 to E4, hex-row, chamfer edge, sheet 2 of 4. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the plugs' places on the front faces and the bevel's line on the back, on the faces' outsides, which lie face up. Then black #000000 frees the parts.</desc>
+<desc>1 user unit = 1mm. Panpipes, E3 to E4, hex-row, chamfer edge, sheet 2 of 4. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the plugs' places on the front faces and the bevel's line on the free backs, on the faces' outsides, which lie face up. Then black #000000 frees the parts.</desc>
   <g fill="none" stroke="#0000ff" stroke-width="0.2">
     <path d="M 7.065,6.065 L 7.065,20.025"/>
     <path d="M 7.065,26.155 L 7.065,40.116"/>

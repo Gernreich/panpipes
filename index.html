@@ -104,7 +104,7 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <h1 id="panpipes">Panpipes</h1>
 <p><strong><a href="https://github.com/Gernreich/panpipes">Read the README</a></strong></p>
 <p>A low raft of panpipes in 3mm plywood: eight closed pipes from E3 to E4, the E natural minor scale, side by side between two plates. You blow across the open tops, one pipe at a time. Each pipe is stopped by a plug pressed up from its open bottom, and moving the plug tunes it.</p>
-<p>The same pipes also come as <strong>separate tubes glued side to side</strong>, in three shapes: octagons in a row, hexagons in a zigzag of two rows, and hexagons in a row. <a href="#the-tube-sets">The tube sets</a> describes them.</p>
+<p>The same pipes also come as <strong>separate tubes glued side to side</strong>, in four shapes: octagons in a row, octagons in two rows as a siku's are, hexagons in a zigzag, and hexagons in a row. <a href="#the-tube-sets">The tube sets</a> describes them.</p>
 <p>Output is millimetre-true — <code>1 user unit = 1mm</code> with a physical <code>width</code>/<code>height</code> — so it prints and cuts at real size.</p>
 <p><strong>It has not been cut or played yet.</strong> The pipe lengths come from the quarter-wave formula with a textbook end correction, and the player's lip changes that correction. The plugs are there to absorb it: <a href="#before-you-cut">Before you cut</a> says by how much.</p>
 <table>
@@ -303,6 +303,13 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <td>side flat to side flat</td>
 </tr>
 <tr>
+<td><code>octagon-two-rows</code></td>
+<td>8 strips, 23.05 to 19.65mm across the flats</td>
+<td>110.5 × 57.6mm</td>
+<td>88: 64 strips, 24 plug layers</td>
+<td>side flat to side flat in each row, back flat to front flat between the rows</td>
+</tr>
+<tr>
 <td><code>hex-zigzag</code></td>
 <td>6 strips, 22.54 to 19.22mm across the flats</td>
 <td>194.3 × 42.5mm</td>
@@ -321,20 +328,22 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 </div>
 <p>Each is four sheets of 3mm ply, the longest strip 538.9mm.</p>
 <p><strong><code>octagon-row</code></strong> is the closest to the raft: a flat to the front for the lip, a flat to the back for the blowing edge, and a flat either side to glue to the neighbours. It has the most strips, 64, and the narrowest faces, 10.6 to 12.0mm outside.</p>
-<p><strong><code>hex-zigzag</code></strong> turns each hexagon so it has a flat to the front and one to the back, and then its sides are corners, so it cannot sit flat beside its neighbour in a line. Instead each pipe is glued to the next across a diagonal face, and the pipes alternate between a front row and a back row 14mm behind it: E3, G3, B3 and D4 in front, F♯3, A3, C4 and E4 behind, the way a siku's two rows split the scale. With level rims a back pipe's front face would sit between two front pipes, out of the lip's reach, so <strong>the back row stands 15mm taller at the rim</strong>: tilt the set a little and the lip rests on its front face above the front row. That 15mm is a guess, not a measurement; <code>--raise=</code> changes it and <code>--raise=0</code> levels the rims. Each pipe is glued to two neighbours, on faces 14.6 to 16.5mm wide, 9.4mm of it clear of the joints.</p>
+<p><strong><code>octagon-two-rows</code></strong> is the siku's layout. The Andean siku splits its scale between two rows, one behind the other, so neighbouring notes alternate between them and the instrument is half as wide. Here the front row is E3, G3, B3 and D4 and the back row F♯3, A3, C4 and E4, each back pipe directly behind the note below it. Each row is glued in a line, flat to flat, and the back row is glued to the back of the front row, flat to flat again; the rims are level, as a siku's are. The set is 110.5mm across, half the octagon row. Each back pipe is a little narrower than the one in front of it, so the back row is slid to split the difference both ways, and the faces glued between the rows share at least 5.6mm of flat face.</p>
+<p>Gluing the rows together changes two details. A back-row pipe's front is glued out of sight, so <strong>its plug's blue line is on its back</strong> instead. And a front-row pipe's back face, its blowing edge, is glued to the back row, so it can take no line and no notch: on a <code>chamfer</code> build, sand its bevel across the joint, leaving 1mm of the front pipe's wall flat at the rim and sloping down at 45° through both walls. The slope reaches the back pipe's bore 5mm below its rim, lowering the near rim of the back pipe, where the lip rests to play it. The <code>notch</code> edge is not drawn for this shape.</p>
+<p><strong><code>hex-zigzag</code></strong> turns each hexagon so it has a flat to the front and one to the back, and then its sides are corners, so it cannot sit flat beside its neighbour in a line. Instead each pipe is glued to the next across a diagonal face, and the pipes alternate between a front row and a back row 14mm behind it: E3, G3, B3 and D4 in front, F♯3, A3, C4 and E4 behind, the scale split as a siku's is, but with the rows nested into each other's gaps rather than one whole row behind the other. The rims are level. <code>--raise=</code> stands the back row taller at the rim, <code>--raise=15</code> by 15mm, to bring each back pipe's front face clear above the front row for the lip; that is an idea of this design, not a tradition, and nobody has played either yet. Each pipe is glued to two neighbours, on faces 14.6 to 16.5mm wide, 9.4mm of it clear of the joints.</p>
 <p><strong><code>hex-row</code></strong> turns the hexagons the other way, flats either side, and glues them in a line. A corner faces the lip, so round it off with sandpaper, and the blowing edge is a V of two back faces rather than one flat. That is the least conventional of the three to play.</p>
 <p><strong>The edges</strong> are the raft's, on the back face of every tube:</p>
 <ul>
-<li><strong><code>chamfer</code></strong>, the default: a line engraved 2mm below the rim on the back face, on both back faces for <code>hex-row</code>. Sand a 45° bevel down to it. The rims are at one height, but the back faces are not in line, since the tubes narrow, so bevel each tube on its own.</li>
+<li><strong><code>chamfer</code></strong>, the default: a line engraved 2mm below the rim on the back face, on both back faces for <code>hex-row</code>. Sand a 45° bevel down to it. The rims are at one height, but the back faces are not in line, since the tubes narrow, so bevel each tube on its own. On <code>octagon-two-rows</code> only the back row has the line; the front row's bevels go across the joint, as above.</li>
 <li><strong><code>plain</code></strong>: the rim as cut.</li>
-<li><strong><code>notch</code></strong>: the quena notch with its bevel line, narrower than the raft's to fit a single face: 4.9 to 5.7mm wide and 3.4 to 3.9mm deep on the octagons, 6.7 to 7.8mm wide and 4.3 to 4.9mm deep on the hexagons. The back face keeps its whole width for 18mm below the rim, its neighbours' fingers moved clear, so the notch is never next to a joint. There is no notch on <code>hex-row</code>: it has a corner at the back.</li>
+<li><strong><code>notch</code></strong>: the quena notch with its bevel line, narrower than the raft's to fit a single face: 4.9 to 5.7mm wide and 3.4 to 3.9mm deep on the octagons, 6.7 to 7.8mm wide and 4.3 to 4.9mm deep on the hexagons. The back face keeps its whole width for 18mm below the rim, its neighbours' fingers moved clear, so the notch is never next to a joint. There is no notch on <code>hex-row</code>, which has a corner at the back, or on <code>octagon-two-rows</code>, whose front row's backs are glued.</li>
 </ul>
-<iframe src="turn-tubes.html" title="The three tube sets as solid parts you can drag to turn and pull apart: eight octagonal tubes in a row, eight hexagonal tubes in a two-row zigzag with the back row standing taller, and eight hexagonal tubes in a row, with a button for each" style="width:100%;height:560px;border:0"></iframe>
+<iframe src="turn-tubes.html" title="The four tube sets as solid parts you can drag to turn and pull apart: eight octagonal tubes in a row, eight octagonal tubes in two rows glued back to front, eight hexagonal tubes in a two-row zigzag, and eight hexagonal tubes in a row, with a button for each" style="width:100%;height:560px;border:0"></iframe>
 
 <h3 id="building-a-tube-set">Building a tube set</h3>
 <ol type="1">
-<li>Sort the strips by length: each length is one tube, eight strips for an octagon, six for a hexagon. A tube's strips are not all alike: the fingers along their edges come in three patterns, so each strip closes against only its own neighbours. Start from the front, the strip whose blue line is 21mm from one end, the bottom; work round it, each strip's fingers into the last one's gaps, and if a strip will not close, it belongs elsewhere in the ring. The back is the strip with the line 2mm below the rim on a <code>chamfer</code> build (two strips on <code>hex-row</code>), or with the U on a <code>notch</code> build. Rubber bands hold a tube while you work round it.</li>
-<li><strong>Glue the tubes to each other before any shellac</strong>, since glue will not take on shellac. Stand them rim down on something flat, so the rims come out level, and glue each to the next in order, low to high, front lines all facing you. For <code>hex-zigzag</code>, the back row's rims stand 15mm past the front row's, so put a 15mm spacer under the front row's rims.</li>
+<li>Sort the strips by length: each length is one tube, eight strips for an octagon, six for a hexagon. A tube's strips are not all alike: the fingers along their edges come in three patterns, so each strip closes against only its own neighbours. Start from the front, the strip whose blue line is 21mm from one end, the bottom; work round it, each strip's fingers into the last one's gaps, and if a strip will not close, it belongs elsewhere in the ring. The back is the strip with the line 2mm below the rim on a <code>chamfer</code> build (two strips on <code>hex-row</code>), or with the U on a <code>notch</code> build. On <code>octagon-two-rows</code> the back row's plug lines are on their backs, so there the strip with both lines, or with the plug's line alone on a <code>plain</code> build, is the back. Rubber bands hold a tube while you work round it.</li>
+<li><strong>Glue the tubes to each other before any shellac</strong>, since glue will not take on shellac. Stand them rim down on something flat, so the rims come out level, and glue each to the next in order, low to high, the fronts all facing you. For <code>octagon-two-rows</code>, glue each row in a line first, then the back row to the back of the front row, each back pipe behind the note below it. On a <code>hex-zigzag</code> drawn with <code>--raise=</code>, the back row's rims stand past the front row's, so put a spacer that thick under the front row's rims.</li>
 <li>Seal every seam with high-cut shellac, outside and inside each tube, from both ends.</li>
 <li>Make the blowing edge, round the lip side of each rim, and shellac the rims.</li>
 <li>Press the plugs in from below to their lines, and tune as for the raft, below.</li>
@@ -368,9 +377,9 @@ python3 panpipes.py --notes=G3,A3,B3,C4,D4,E4,F#4,G4 --no-write   # other pipes,
 python3 panpipes.py --end=0.4 --no-write        # a different open-end correction
 python3 panpipes.py --kerf=0.18 --out=mine      # for a laser with a 0.18mm kerf
 python3 panpipes.py --page-to=turn.html         # the 3D view, all four edges
-python3 tube_panpipes.py --shape=hex-zigzag --no-write     # a tube set&#39;s checks: octagon-row, hex-zigzag, hex-row
+python3 tube_panpipes.py --shape=hex-zigzag --no-write     # a tube set&#39;s checks: octagon-row, octagon-two-rows, hex-zigzag, hex-row
 python3 tube_panpipes.py --shape=octagon-row --edge=notch --out=cut-files   # its sheets
-python3 tube_panpipes.py --shape=hex-zigzag --raise=20 --no-write   # the back row taller
+python3 tube_panpipes.py --shape=hex-zigzag --raise=15 --no-write   # the back row 15mm taller
 python3 tube_panpipes.py --page-to=turn-tubes.html   # the tube sets&#39; 3D view</code></pre>
 <p><code>panpipes.py</code> draws nothing until every check passes:</p>
 <ul>
@@ -390,7 +399,7 @@ python3 tube_panpipes.py --page-to=turn-tubes.html   # the tube sets&#39; 3D vie
 <li>every sheet fits the bed;</li>
 <li>every part is on a sheet.</li>
 </ul>
-<p><code>tube_panpipes.py</code> checks that every blue line on a front is its plug's face, that every bore is the area the pipe is tuned for, that every plug is a press-fit and can come down as well as go up, that every glued face lies flat on its neighbour's and no two tubes overlap, that a face keeps ply between its two joints, that every notch and its bevel line fit the back face or every back face has its bevel line, and the same pipe, part and sheet checks.</p>
+<p><code>tube_panpipes.py</code> checks that every blue line is its plug's face, on a face no neighbour is glued over, that every bore is the area the pipe is tuned for, that every plug is a press-fit and can come down as well as go up, that every glued face lies flat on its neighbour's and no two tubes overlap, that a face keeps ply between its two joints, that every notch and its bevel line fit the back face or every free back face has its bevel line, and the same pipe, part and sheet checks.</p>
 <p><code>panpipes.py</code> imports the square flute's kerf, finger joint and packer from <code>square_flute.py</code>, and the mitred offset from the four-hole ocarinas' <code>four_hole_ocarinas.py</code>; <code>tube_panpipes.py</code> also takes the tube's joint from their <code>polyhedron.py</code>. So <a href="https://github.com/Gernreich/square-flute">square-flute</a>, <a href="https://github.com/Gernreich/four-hole-ocarinas">four-hole-ocarinas</a>, <a href="https://github.com/Gernreich/swept-curve">swept-curve</a> and <a href="https://github.com/Gernreich/lasermade-tools">lasermade-tools</a> must be checked out beside this repository.</p>
 <h2 id="files">Files</h2>
 <p>Every raft build is three sheets of 3mm ply, and the strip edge adds a fourth, of 1.5mm stock; every tube set is four sheets.</p>
@@ -578,7 +587,39 @@ python3 tube_panpipes.py --page-to=turn-tubes.html   # the tube sets&#39; 3D vie
 <td>octagon-row, plain edge, sheet 4 of 4</td>
 </tr>
 <tr>
-<td><code>previews/panpipes-E3-chamfer-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-chamfer-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-chamfer-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-chamfer-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-chamfer-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-chamfer-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-chamfer-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-plain-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-plain-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-plain-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-plain-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-chamfer-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-chamfer-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-chamfer-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-chamfer-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-notch-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-notch-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-notch-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-notch-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-plain-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-plain-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-plain-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-plain-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-notch-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-notch-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-notch-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-chamfer-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-chamfer-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-chamfer-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-chamfer-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-notch-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-notch-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-notch-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-notch-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-plain-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-plain-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-plain-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-plain-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-plain-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-plain-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-plain-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-strip-1.5mm-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-strip-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-strip-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-strip-sheet3-cut-files.svg</code></td>
+<td><code>cut-files/panpipes-E3-octagon-two-rows-chamfer-sheet1-cut-files.svg</code></td>
+<td>octagon-two-rows, chamfer edge, sheet 1 of 4</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-octagon-two-rows-chamfer-sheet2-cut-files.svg</code></td>
+<td>octagon-two-rows, chamfer edge, sheet 2 of 4</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-octagon-two-rows-chamfer-sheet3-cut-files.svg</code></td>
+<td>octagon-two-rows, chamfer edge, sheet 3 of 4</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-octagon-two-rows-chamfer-sheet4-cut-files.svg</code></td>
+<td>octagon-two-rows, chamfer edge, sheet 4 of 4</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-octagon-two-rows-plain-sheet1-cut-files.svg</code></td>
+<td>octagon-two-rows, plain edge, sheet 1 of 4</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-octagon-two-rows-plain-sheet2-cut-files.svg</code></td>
+<td>octagon-two-rows, plain edge, sheet 2 of 4</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-octagon-two-rows-plain-sheet3-cut-files.svg</code></td>
+<td>octagon-two-rows, plain edge, sheet 3 of 4</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-octagon-two-rows-plain-sheet4-cut-files.svg</code></td>
+<td>octagon-two-rows, plain edge, sheet 4 of 4</td>
+</tr>
+<tr>
+<td><code>previews/panpipes-E3-chamfer-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-chamfer-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-chamfer-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-chamfer-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-chamfer-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-chamfer-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-chamfer-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-plain-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-plain-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-plain-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-hex-row-plain-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-chamfer-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-chamfer-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-chamfer-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-chamfer-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-notch-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-notch-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-notch-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-notch-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-plain-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-plain-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-plain-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-hex-zigzag-plain-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-notch-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-notch-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-notch-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-chamfer-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-chamfer-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-chamfer-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-chamfer-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-notch-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-notch-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-notch-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-notch-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-plain-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-plain-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-plain-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-row-plain-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-two-rows-chamfer-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-two-rows-chamfer-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-two-rows-chamfer-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-two-rows-chamfer-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-two-rows-plain-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-two-rows-plain-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-two-rows-plain-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-octagon-two-rows-plain-sheet4-cut-files.svg</code> · <code>previews/panpipes-E3-plain-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-plain-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-plain-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-strip-1.5mm-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-strip-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-strip-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-strip-sheet3-cut-files.svg</code></td>
 <td>a display rendering of each sheet — <strong>not</strong> cut files</td>
 </tr>
 <tr>
@@ -587,7 +628,7 @@ python3 tube_panpipes.py --page-to=turn-tubes.html   # the tube sets&#39; 3D vie
 </tr>
 <tr>
 <td><code>turn-tubes.html</code></td>
-<td>the tube sets' 3D view, all three shapes</td>
+<td>the tube sets' 3D view, all four shapes</td>
 </tr>
 <tr>
 <td><code>tube_panpipes.py</code></td>

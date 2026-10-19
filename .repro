@@ -70,6 +70,14 @@ cut-files/panpipes-E3-octagon-row-plain-sheet1-cut-files.svg :: python3 tube_pan
 cut-files/panpipes-E3-octagon-row-plain-sheet2-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=plain --out=$(dirname $OUT)
 cut-files/panpipes-E3-octagon-row-plain-sheet3-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=plain --out=$(dirname $OUT)
 cut-files/panpipes-E3-octagon-row-plain-sheet4-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-two-rows-chamfer-sheet1-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-two-rows --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-two-rows-chamfer-sheet2-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-two-rows --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-two-rows-chamfer-sheet3-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-two-rows --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-two-rows-chamfer-sheet4-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-two-rows --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-two-rows-plain-sheet1-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-two-rows --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-two-rows-plain-sheet2-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-two-rows --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-two-rows-plain-sheet3-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-two-rows --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-two-rows-plain-sheet4-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-two-rows --edge=plain --out=$(dirname $OUT)
 
 # --- their previews ---
 previews/panpipes-E3-hex-row-chamfer-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-row-chamfer-sheet1-cut-files.svg $OUT
@@ -104,6 +112,14 @@ previews/panpipes-E3-octagon-row-plain-sheet1-cut-files.svg :: python3 ../laserm
 previews/panpipes-E3-octagon-row-plain-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-plain-sheet2-cut-files.svg $OUT
 previews/panpipes-E3-octagon-row-plain-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-plain-sheet3-cut-files.svg $OUT
 previews/panpipes-E3-octagon-row-plain-sheet4-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-plain-sheet4-cut-files.svg $OUT
+previews/panpipes-E3-octagon-two-rows-chamfer-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-two-rows-chamfer-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-octagon-two-rows-chamfer-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-two-rows-chamfer-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-octagon-two-rows-chamfer-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-two-rows-chamfer-sheet3-cut-files.svg $OUT
+previews/panpipes-E3-octagon-two-rows-chamfer-sheet4-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-two-rows-chamfer-sheet4-cut-files.svg $OUT
+previews/panpipes-E3-octagon-two-rows-plain-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-two-rows-plain-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-octagon-two-rows-plain-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-two-rows-plain-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-octagon-two-rows-plain-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-two-rows-plain-sheet3-cut-files.svg $OUT
+previews/panpipes-E3-octagon-two-rows-plain-sheet4-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-two-rows-plain-sheet4-cut-files.svg $OUT
 
 # --- their 3D view ---
 turn-tubes.html :: python3 tube_panpipes.py --page-to=$OUT

@@ -9,7 +9,7 @@
      Cut the file in the repository root, not this one. -->
   <rect x="0.0" y="0.0" width="548.94" height="291.94" fill="#ffffff"/>
 <title>Panpipes E3 to E4, hex-zigzag, chamfer edge, sheet 1 of 4</title>
-<desc>1 user unit = 1mm. Panpipes, E3 to E4, hex-zigzag, chamfer edge, sheet 1 of 4. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the plugs' places on the front faces and the bevel's line on the back, on the faces' outsides, which lie face up. Then black #000000 frees the parts.</desc>
+<desc>1 user unit = 1mm. Panpipes, E3 to E4, hex-zigzag, chamfer edge, sheet 1 of 4. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the plugs' places on the front faces and the bevel's line on the free backs, on the faces' outsides, which lie face up. Then black #000000 frees the parts.</desc>
   <g fill="none" stroke="#0000ff" stroke-width="1.098">
     <path d="M 522.877,6.797 L 522.877,19.811"/>
     <path d="M 7.065,67.888 L 7.065,82.366"/>

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Cut files for the same low panpipes, E3 to E4, as separate tubes glued
-side to side: octagonal in a row, hexagonal in a zigzag, or hexagonal in a row.
+side to side: octagonal in a row or in two rows, hexagonal in a zigzag, or
+hexagonal in a row.
 
     python3 tube_panpipes.py --shape=octagon-row --no-write      # the checks
     python3 tube_panpipes.py --shape=hex-zigzag --out=DIR        # the sheets
@@ -11,7 +12,8 @@ side to side: octagonal in a row, hexagonal in a zigzag, or hexagonal in a row.
 EACH PIPE is a tube of N strips of 3mm ply, finger-jointed edge to edge by the
 four-hole ocarinas' polyhedron.py joint, as the octagonal flute's tube is:
 open at the rim, open at the bottom, a plug of PLUG_LAYERS polygons pressed up
-from below to a blue line on its front. The acoustics are panpipes.py's: the
+from below to a blue line on its front, or on its back where the front is
+glued to another tube. The acoustics are panpipes.py's: the
 same notes, the same air columns for the same bore areas, AREA_LOW at E3
 falling to AREA_HIGH at E4, the raft's. The tubes are press-fit and sealed;
 NEIGHBOURS ARE GLUED, face to face, since separate tubes share no wall.
@@ -21,11 +23,15 @@ THE SHAPES, the y axis across the set, z from the player to the back:
   octagon-row  octagons in a line, a flat to the front for the lip, a flat
                to the back for the blowing edge, and flats either side, glued
                to the neighbours
+  octagon-two-rows
+               a siku's layout: two rows of octagons, each glued flat to flat
+               in a line, the back row glued behind the front one, back face
+               to front face, each pipe behind the note below it; the scale
+               alternates between the rows, the rims are level
   hex-zigzag   hexagons with a flat to the front and to the back, each pipe
                glued to the next on a diagonal face, so they alternate between
-               a front row and a back row half a pipe behind it, as a siku's
-               two rows split the scale; the back row stands RAISE taller at
-               the rim, so its front face is clear of the front row for the lip
+               a front row and a back row half a pipe behind it; the rims are
+               level unless --raise= stands the back row taller
   hex-row      hexagons with flats either side, glued in a line; a corner
                faces the lip and the blowing edge is a V of two faces
 
@@ -33,11 +39,14 @@ THE BLOWING EDGE (--edge=) is the far side of the rim, as on the raft:
 
   chamfer  the default: a blue line engraved CHAMFER_DOWN below the rim on
            the outside of the back face (both back faces on hex-row); sand a
-           45 degree bevel down to it
+           45 degree bevel down to it. On octagon-two-rows the front row's
+           back faces are glued to the back row, so they have no line: the
+           bevel is sanded across the joint, judged from the rim
   plain    the rim as cut
   notch    a U cut into the back face's rim with a bevel line round it, the
            raft's quena notch, narrower to fit one face; not on hex-row,
-           which has a corner there
+           which has a corner there, nor on octagon-two-rows, whose front
+           row's back faces are glued to the back row
 """
 import math
 import os
@@ -63,9 +72,12 @@ INTERF = SF.INTERF_ACROSS
 AREA_LOW = PP.W_LOW * PP.DEPTH     # 440mm^2, the raft's lowest pipe
 AREA_HIGH = PP.W_HIGH * PP.DEPTH   # 320mm^2, its highest
 # sides, the first face's angle from the front, and the face each pipe is
-# glued to the next across (alternating for the zigzag), in degrees
+# glued to the next across (alternating for the zigzag), in degrees; ROWS
+# for the two rows, laid out by centres() itself
+ROWS = 'rows'
 SHAPES = {
     'octagon-row': (8, 0.0, (90.0,)),
+    'octagon-two-rows': (8, 0.0, ROWS),
     'hex-zigzag': (6, 0.0, (120.0, 60.0)),
     'hex-row': (6, 30.0, (90.0,)),
 }
@@ -73,11 +85,15 @@ EDGES = ('chamfer', 'plain', 'notch')
 NOTCH_OF = 0.6                     # notch width, of the back face's inside width
 RIM_OWN = 3 * P.FINGER             # the back face owns its joints this far down
 LINE_IN = 0.5                      # an engraved line's least distance in from a face's edge
-# The zigzag's back row stands this much taller at the rim. Level rims would put
-# a back pipe's front face between two front pipes, half a pipe behind where the
-# lip rests; raised, its front face stands clear above them for the lip.
-# Measured by nobody yet: --raise= changes it, 0 levels the rims.
-RAISE = 15.0
+# The least flat face two glued tubes share, clear of both tubes' joints. It runs
+# the length of the shorter tube, so even the shortest, 277mm, has well over
+# 1000mm^2 of glue at 5mm. Two rows share less than one, since each back pipe is
+# narrower than the front one it sits behind.
+GLUE_MIN = 5.0
+# How much taller the zigzag's back row stands at the rim. Level, as a siku's
+# rows are, by default; --raise= stands the back row taller, to put its front
+# face clear above the front row for the lip, an idea nobody has played yet.
+RAISE = 0.0
 
 
 def normal(theta):
@@ -106,23 +122,54 @@ def design(notes, shape):
         F = math.sqrt(A / k)
         a = math.sqrt(A / math.pi)
         air = PP.C / (4 * f) - PP.END * a
-        rim = -RAISE if shape == 'hex-zigzag' and i % 2 else 0.0
+        rim = -RAISE if shape == 'hex-zigzag' and i % 2 else 0.0      # x from the rim
         out.append(dict(note=nm, f=f, A=A, F=F, Fo=F + 2 * T, a=a, air=air, rim=rim,
                         length=air + PP.PLUG_LAYERS * T + PP.SPARE))
     return out
 
 
+def against(pipes, cs, i, j, theta):
+    """Pipe j's axis, placed against pipe i across i's face at theta, so the
+    two faces lie in one plane and share a centre line."""
+    nv = normal(theta)
+    d = (pipes[i]['Fo'] + pipes[j]['Fo']) / 2
+    return (cs[i][0] + d * nv[1], cs[i][1] + d * nv[2])
+
+
 def centres(pipes, shape):
-    """Each tube's axis, (y, z): each one placed against the last across the
-    glued face, so the two faces lie in one plane and share a centre line."""
+    """Each tube's axis, (y, z), and the glued pairs, (i, j, theta): j glued
+    to i across i's face at theta."""
     _, _, glue = SHAPES[shape]
-    cs = [(0.0, 0.0)]
-    for i in range(1, len(pipes)):
-        nv = normal(glue[(i - 1) % len(glue)])
-        d = (pipes[i - 1]['Fo'] + pipes[i]['Fo']) / 2
-        y, z = cs[-1]
-        cs.append((y + d * nv[1], z + d * nv[2]))
-    return cs
+    cs, pairs = {0: (0.0, 0.0)}, []
+    if glue == ROWS:
+        # the front row the even pipes, the back row the odd ones, each pipe
+        # behind the note below it; each row a line glued side to side
+        for i in range(1, len(pipes)):
+            if i % 2:
+                pairs.append((i - 1, i, 180.0))
+            if i >= 2:
+                pairs.append((i - 2, i, 90.0))
+            # a back pipe goes against the front one before it; a back pipe
+            # after the first also touches its row, so it sits on both
+            k, th = (i - 1, 180.0) if i % 2 else (i - 2, 90.0)
+            cs[i] = against(pipes, cs, k, i, th)
+            if i % 2 and i >= 3:
+                # flush against its row's last pipe, behind its own front pipe
+                y = against(pipes, cs, i - 2, i, 90.0)[0]
+                cs[i] = (y, cs[i][1])
+        # each back pipe is the next note up, a little narrower than the front
+        # one it sits behind, so the back row falls behind along the row; slide
+        # the whole row to split that both ways
+        drift = [cs[i][0] - cs[i - 1][0] for i in range(1, len(pipes), 2)]
+        mid = (min(drift) + max(drift)) / 2
+        for i in range(1, len(pipes), 2):
+            cs[i] = (cs[i][0] - mid, cs[i][1])
+    else:
+        for i in range(1, len(pipes)):
+            th = glue[(i - 1) % len(glue)]
+            pairs.append((i - 1, i, th))
+            cs[i] = against(pipes, cs, i - 1, i, th)
+    return [cs[i] for i in range(len(pipes))], pairs
 
 
 def tube(n, phi, Fo, length):
@@ -147,7 +194,7 @@ def facing(n, phi, toward):
     return [k for k, z in enumerate(zs) if z > best - 1e-6]
 
 
-def build_tube(p, idx, shape, edge, c, num):
+def build_tube(p, idx, shape, edge, c, num, back_glued, front_glued):
     n, phi, _ = SHAPES[shape]
     faces = tube(n, phi, p['Fo'], p['length'])
     ends = [i for i, f in enumerate(faces) if f.name in ('rim', 'bottom')]
@@ -186,10 +233,12 @@ def build_tube(p, idx, shape, edge, c, num):
         def on_face(x, s):
             q = P.add(P.add((x, 0.0, 0.0), P.mul(f.n, f.off)), P.mul(tangent(theta), s))
             return P.to2d(fr, q)
-        if i == front[0]:
+        part.theta = theta % 360
+        if i == (back[0] if front_glued else front[0]):
+            # the plug's line, on the front unless that is glued out of sight
             part.strokes.append([on_face(p['air'], -face_in / 2), on_face(p['air'], face_in / 2)])
-            part.front = True
-        if i in back and edge == 'chamfer':
+            part.plug_mark = True
+        if i in back and edge == 'chamfer' and not back_glued:
             part.strokes.append([on_face(PP.CHAMFER_DOWN, -face_out / 2 + 1.0),
                                  on_face(PP.CHAMFER_DOWN, face_out / 2 - 1.0)])
         if i == back[0] and edge == 'notch':
@@ -238,14 +287,20 @@ def build(pipes, shape, edge):
     if edge == 'notch' and len(facing(*SHAPES[shape][:2], +1)) > 1:
         raise SystemExit(f'error: --shape={shape} has a corner at the back, and a notch '
                          f'cannot be cut into a corner. Its edges are chamfer and plain.')
-    cs = centres(pipes, shape)
+    if edge == 'notch' and SHAPES[shape][2] == ROWS:
+        raise SystemExit(f'error: --shape={shape} glues the front row\'s back faces to the '
+                         f'back row, so they have no free rim to notch. Its edges are chamfer '
+                         f'and plain.')
+    cs, pairs = centres(pipes, shape)
+    glued_back = {i for i, j, th in pairs if th == 180.0}
+    glued_front = {j for i, j, th in pairs if th == 180.0}
     num = iter(range(1, 9999))
     parts, infos = [], []
     for i, (p, c) in enumerate(zip(pipes, cs)):
-        ps, info = build_tube(p, i, shape, edge, c, num)
+        ps, info = build_tube(p, i, shape, edge, c, num, i in glued_back, i in glued_front)
         parts += ps
         infos.append(info)
-    return parts, dict(centres=cs, tubes=infos)
+    return parts, dict(centres=cs, pairs=pairs, glued_back=glued_back, tubes=infos)
 
 
 def outsides(pipes, cs, shape):
@@ -272,11 +327,19 @@ def checks(pipes, parts, info, shape, edge, sheets):
         out.append((ok, what, detail))
     n, phi, glue = SHAPES[shape]
     tubes = info['tubes']
-    fronts = [p for p in parts if getattr(p, 'front', False)]
+    fronts = [p for p in parts if getattr(p, 'plug_mark', False)]
     marks = sorted((p.pipe, p.strokes[0][0][0]) for p in fronts)
-    note(len(marks) == len(pipes) and all(abs(u - pipes[i]['air']) < 1e-6 for i, u in marks),
-         'every blue line on a front is its plug\'s face',
-         f'{len(marks)} lines, {min(u for _, u in marks):.1f} to {max(u for _, u in marks):.1f}mm from the rim')
+    glued = {}
+    for i, j, th in info['pairs']:
+        glued.setdefault(i, set()).add(th % 360)
+        glued.setdefault(j, set()).add((th + 180) % 360)
+    hidden = [p for p in fronts if any(abs(p.theta - g) < 1e-6 for g in glued.get(p.pipe, ()))]
+    on_back = sum(1 for p in fronts if abs(p.theta - 180) < 1e-6)
+    note(len(marks) == len(pipes) and not hidden
+         and all(abs(u - pipes[i]['air']) < 1e-6 for i, u in marks),
+         'every blue line is its plug\'s face, on a face left unglued',
+         f'{len(marks)} lines, {min(u for _, u in marks):.1f} to {max(u for _, u in marks):.1f}mm '
+         f'from the rim' + (f', {on_back} on the back, their fronts glued' if on_back else ''))
     worst = 0.0
     for t, p in zip(tubes, pipes):
         sec = [(q[1], q[2]) for q in t['end_poly']]
@@ -296,18 +359,26 @@ def checks(pipes, parts, info, shape, edge, sheets):
     room = min(p['length'] - p['air'] - PP.PLUG_LAYERS * T for p in pipes)
     note(abs(room - PP.SPARE) < 1e-9, 'every plug can come down as well as go up',
          f'{room:g}mm of pipe below each plug')
-    # glued faces: coplanar, and how much of each they share
-    cs = info['centres']
+    # glued faces: coplanar, and how much solid face, clear of both tubes'
+    # joints, they share along the face
+    cs, pairs = info['centres'], info['pairs']
     share, plane = math.inf, 0.0
-    for i in range(1, len(pipes)):
-        nv = normal(glue[(i - 1) % len(glue)])
-        a = cs[i - 1][0] * nv[1] + cs[i - 1][1] * nv[2] + pipes[i - 1]['Fo'] / 2
-        b = cs[i][0] * nv[1] + cs[i][1] * nv[2] - pipes[i]['Fo'] / 2
+    cl = P.clear(180 - 360 / n)
+    for i, j, th in pairs:
+        nv, tv = normal(th), tangent(th)
+        a = cs[i][0] * nv[1] + cs[i][1] * nv[2] + pipes[i]['Fo'] / 2
+        b = cs[j][0] * nv[1] + cs[j][1] * nv[2] - pipes[j]['Fo'] / 2
         plane = max(plane, abs(a - b))
-        share = min(share, min(tubes[i - 1]['face_out'], tubes[i]['face_out'])
-                    - 2 * P.clear(180 - 360 / n))
-    note(plane < 1e-6 and share >= 6.0, 'every glued face lies flat on its neighbour\'s',
-         f'{len(pipes) - 1} glue joints, at least {share:.1f}mm wide of solid face')
+        span = []
+        for k in (i, j):
+            m = cs[k][0] * tv[1] + cs[k][1] * tv[2]
+            h = tubes[k]['face_out'] / 2 - cl
+            span.append((m - h, m + h))
+        share = min(share, min(s[1] for s in span) - max(s[0] for s in span))
+    note(len(pairs) >= len(pipes) - 1 and plane < 1e-6 and share >= GLUE_MIN,
+         'every glued face lies flat on its neighbour\'s',
+         f'{len(pairs)} glue joints, at least {share:.1f}mm wide of solid face, '
+         f'against {GLUE_MIN:g}')
     rings = outsides(pipes, cs, shape)
 
     def gap(A, B):
@@ -340,10 +411,13 @@ def checks(pipes, parts, info, shape, edge, sheets):
              f'{max(w for w, *_ in nts):.1f}mm wide, {max(d for _, d, *_ in nts):.1f}mm deep, '
              f'the line {max(w for w, *_ in nts) + 2 * PP.CHAMFER_DOWN:.1f}mm across')
     if edge == 'chamfer':
-        lines = sum(len(p.strokes) - (1 if getattr(p, 'front', False) else 0) for p in parts
+        lines = sum(len(p.strokes) - (1 if getattr(p, 'plug_mark', False) else 0) for p in parts
                     if getattr(p, 'edge_back', False))
-        note(lines == len(pipes) * len(tubes[0]['back']), 'every back face has its bevel line',
-             f'{lines} lines, {PP.CHAMFER_DOWN:g}mm below the rim')
+        free = len(pipes) - len(info['glued_back'])
+        note(lines == free * len(tubes[0]['back']), 'every free back face has its bevel line',
+             f'{lines} lines, {PP.CHAMFER_DOWN:g}mm below the rim'
+             + (f'; {len(info["glued_back"])} back faces glued to the back row, sanded across '
+                f'the joint' if info['glued_back'] else ''))
     ratio = min(p['air'] / (2 * p['a']) for p in pipes)
     note(ratio >= 8, 'no pipe is fat for its length', f'{ratio:.1f} diameters at the least')
     longest = max(max(p.w, p.h) for p in parts)
@@ -365,9 +439,11 @@ def svg_sheet(k, n, s, shape, edge):
         black.append(path(mv(offset(p.outline, KERF / 2))))
         for st in p.strokes:
             blue.append(path(mv(st), close=False))
-    eng = {'chamfer': 'the plugs\' places on the front faces and the bevel\'s line on the back',
-           'plain': 'the plugs\' places on the front faces',
-           'notch': 'the plugs\' places on the front faces and the bevel\'s line round every notch'}[edge]
+    where = ('the front faces, or the back where a front is glued'
+             if SHAPES[shape][2] == ROWS else 'the front faces')
+    eng = {'chamfer': f'the plugs\' places on {where} and the bevel\'s line on the free backs',
+           'plain': f'the plugs\' places on {where}',
+           'notch': f'the plugs\' places on {where} and the bevel\'s line round every notch'}[edge]
     desc = (f'1 user unit = 1mm. Panpipes, E3 to E4, {shape}, {edge} edge, sheet {k} of {n}. '
             f'3mm ply, drawn for a {KERF:g}mm kerf. Blue {BLUE} engraves {eng}, on the faces\' '
             f'outsides, which lie face up. Then black {BLACK} frees the parts.')
@@ -409,9 +485,10 @@ def page(path_out, notes):
     t.write(path_out, 'Tube panpipes in 3D', designs,
             'Drag to turn, scroll or pinch to zoom; draw Explode to take it apart. Every part is '
             'the cut files’ own outline: each pipe a tube of finger-jointed strips, glued to '
-            'its neighbours, with its plug, darker, at the blue line on its front. The buttons '
-            'switch between the octagonal row, the hexagonal zigzag and the hexagonal row, each '
-            'with the chamfer edge’s line along the back of the rim.',
+            'its neighbours, with its plug, darker, at its blue line. The buttons switch between '
+            'the octagonal row, the octagons in two rows, the hexagonal zigzag and the hexagonal '
+            'row, each with the chamfer edge’s line along the back of the rim where the back '
+            'is free.',
             'tube_panpipes.py', spin=True)
 
 
