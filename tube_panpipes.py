@@ -94,6 +94,9 @@ def tangent(theta):
 def design(notes, shape):
     n, phi, _ = SHAPES[shape]
     k = n * math.tan(math.pi / n) / 4                # area = k x flats^2
+    if len(notes) < 2:
+        raise SystemExit('error: --notes= names at least two pipes: a tube set is pipes glued '
+                         'to each other.')
     fs = [PP.freq(x) for x in notes]
     if any(b <= a for a, b in zip(fs, fs[1:])):
         raise SystemExit('error: --notes= runs from the lowest pipe to the highest.')
@@ -457,7 +460,8 @@ def main():
     depth = max(q[1] for q in pts) - min(q[1] for q in pts)
     print(f'panpipes, {notes[0]} to {notes[-1]}, {shape}, {edge} edge: {len(pipes)} tubes of '
           f'{SHAPES[shape][0]} strips, the set {width:.1f}mm across, {depth:.1f}mm deep'
-          + (f'; the back row {RAISE:g}mm taller at the rim' if shape == 'hex-zigzag' else ''))
+          + ((f'; the back row {RAISE:g}mm taller at the rim' if RAISE else '; the rims level')
+             if shape == 'hex-zigzag' else ''))
     for p in pipes:
         print(f'  {p["note"]:4} {p["f"]:7.2f}Hz  {p["F"]:5.2f}mm across the flats  plug face '
               f'{p["air"]:6.1f}mm from the rim, tube {p["length"]:6.1f}mm')

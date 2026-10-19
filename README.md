@@ -150,7 +150,7 @@ strip glues to their back edges as well. It is cut from its own sheet,
 `panpipes-E3-strip-1.5mm-sheet1-cut-files.svg`, in 1.5mm ply or veneer.
 
 This gives the thinnest edge without sanding, at the cost of a second material and
-a glued joint, the one glued joint in any build. The strip has no joints of its own,
+a glued joint, the one glued joint in any raft build. The strip has no joints of its own,
 so its kerf hardly matters.
 
 ### Which to cut
@@ -171,7 +171,8 @@ tubes **glued to each other** face to face. Separate tubes share no wall, so the
 is what holds the set together; inside each tube the joints are press-fit and sealed
 with shellac, as everywhere else. Each bore has the same area as the raft's pipe for
 the same note, 440mm² at E3 down to 320mm² at E4, so the air columns, the plugs' lines
-and the tuning are the raft's.
+and the tuning are the raft's. [Before you cut](#before-you-cut) applies to the tubes
+too: the stock, the kerf and the end correction are the same.
 
 | Shape | Tube | Set | Parts | Glued |
 |---|---|---|---|---|
@@ -205,12 +206,12 @@ three to play.
 
 - **`chamfer`**, the default: a line engraved 2mm below the rim on the back face, on
   both back faces for `hex-row`. Sand a 45° bevel down to it. The rims are at one
-  height in each row, so a block along the row does it; on `hex-zigzag` do each row
-  on its own.
+  height, but the back faces are not in line, since the tubes narrow, so bevel each
+  tube on its own.
 - **`plain`**: the rim as cut.
 - **`notch`**: the quena notch with its bevel line, narrower than the raft's to fit a
-  single face: 5.7mm wide and 3.9mm deep on the octagons, 7.8mm and 4.9mm on the
-  hexagons. The back face keeps its whole width for 18mm below the rim, its
+  single face: 4.9 to 5.7mm wide and 3.4 to 3.9mm deep on the octagons, 6.7 to
+  7.8mm wide and 4.3 to 4.9mm deep on the hexagons. The back face keeps its whole width for 18mm below the rim, its
   neighbours' fingers moved clear, so the notch is never next to a joint. There is no
   notch on `hex-row`: it has a corner at the back.
 
@@ -221,13 +222,19 @@ All three sets turn in 3D on the [published page](https://gernreich.github.io/pa
 
 ### Building a tube set
 
-1. Press each tube together from its strips. Every strip of a tube is the same length,
-   and the one with the blue line across it is its front; on a notched build, the one
-   with the U is its back. Rubber bands hold a tube while you work round it.
+1. Sort the strips by length: each length is one tube, eight strips for an octagon,
+   six for a hexagon. A tube's strips are not all alike: the fingers along their edges
+   come in three patterns, so each strip closes against only its own neighbours. Start
+   from the front, the strip whose blue line is 21mm from one end, the bottom; work
+   round it, each strip's fingers into the last one's gaps, and if a strip will not
+   close, it belongs elsewhere in the ring. The back is the strip with the line 2mm
+   below the rim on a `chamfer` build (two strips on `hex-row`), or with the U on a
+   `notch` build. Rubber bands hold a tube while you work round it.
 2. **Glue the tubes to each other before any shellac**, since glue will not take on
    shellac. Stand them rim down on something flat, so the rims come out level, and
    glue each to the next in order, low to high, front lines all facing you. For
-   `hex-zigzag`, put a 15mm spacer under the back row's rims.
+   `hex-zigzag`, the back row's rims stand 15mm past the front row's, so put a 15mm spacer under
+   the front row's rims.
 3. Seal every seam with high-cut shellac, outside and inside each tube, from both ends.
 4. Make the blowing edge, round the lip side of each rim, and shellac the rims.
 5. Press the plugs in from below to their lines, and tune as for the raft, below.
@@ -268,7 +275,8 @@ must be the full 600 × 305mm. The generator checks against it.
 Run the engrave first, then the cuts. **Blue** engraves the plugs' places on the front
 plate and, on the `chamfer` and `notch` builds, the bevel's lines on the back plate. Then **orange**
 cuts the slots, and **black** frees the parts. Both plates are drawn outside face up,
-so the lines land on the outside.
+so the lines land on the outside. The tube sets have no slots: blue engraves the
+plugs' places and the bevels' lines on the strips' outsides, and black frees the parts.
 
 ## Building it
 
@@ -341,7 +349,7 @@ no two tubes overlap, that a face keeps ply between its two joints, that every n
 and its bevel line fit the back face or every back face has its bevel line, and the
 same pipe, part and sheet checks.
 
-It imports the square flute's kerf, finger joint and packer from `square_flute.py`,
+`panpipes.py` imports the square flute's kerf, finger joint and packer from `square_flute.py`,
 and the mitred offset from the four-hole ocarinas' `four_hole_ocarinas.py`;
 `tube_panpipes.py` also takes the tube's joint from their `polyhedron.py`. So
 [square-flute](https://github.com/Gernreich/square-flute),
