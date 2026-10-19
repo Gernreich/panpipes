@@ -327,28 +327,65 @@ python3 panpipes.py --page-to=turn.html         # the 3D view, all four edges</c
 </ul>
 <p>It imports the square flute's kerf, finger joint and packer from <code>square_flute.py</code>, and the mitred offset from the four-hole ocarinas' <code>four_hole_ocarinas.py</code>, so <a href="https://github.com/Gernreich/square-flute">square-flute</a>, <a href="https://github.com/Gernreich/four-hole-ocarinas">four-hole-ocarinas</a>, <a href="https://github.com/Gernreich/swept-curve">swept-curve</a> and <a href="https://github.com/Gernreich/lasermade-tools">lasermade-tools</a> must be checked out beside this repository.</p>
 <h2 id="files">Files</h2>
+<p>Every build is three sheets of 3mm ply; the strip edge adds a fourth, of 1.5mm stock.</p>
 <div class="tw">
 <table>
 <tbody>
 <tr>
-<td><code>cut-files/panpipes-E3-chamfer-sheet1-cut-files.svg</code> to <code>-sheet3-</code></td>
-<td>the default build: the front plate, walls and plugs; the back plate with its bevel line and walls; the last walls</td>
+<td><code>cut-files/panpipes-E3-chamfer-sheet1-cut-files.svg</code></td>
+<td>chamfer, sheet 1: the front plate with the plugs' lines, three walls and all 24 plugs</td>
 </tr>
 <tr>
-<td><code>cut-files/panpipes-E3-plain-sheet1-cut-files.svg</code> to <code>-sheet3-</code></td>
-<td>the plain edge</td>
+<td><code>cut-files/panpipes-E3-chamfer-sheet2-cut-files.svg</code></td>
+<td>chamfer, sheet 2: the back plate, with the bevel's line, and three walls</td>
 </tr>
 <tr>
-<td><code>cut-files/panpipes-E3-notch-sheet1-cut-files.svg</code> to <code>-sheet3-</code></td>
-<td>the notched edge</td>
+<td><code>cut-files/panpipes-E3-chamfer-sheet3-cut-files.svg</code></td>
+<td>chamfer, sheet 3: the last three walls</td>
 </tr>
 <tr>
-<td><code>cut-files/panpipes-E3-strip-sheet1-cut-files.svg</code> to <code>-sheet3-</code> · <code>cut-files/panpipes-E3-strip-1.5mm-sheet1-cut-files.svg</code></td>
-<td>the strip edge, and the strip on its own sheet of 1.5mm stock</td>
+<td><code>cut-files/panpipes-E3-plain-sheet1-cut-files.svg</code></td>
+<td>plain, sheet 1: the front plate with the plugs' lines, three walls and all 24 plugs</td>
 </tr>
 <tr>
-<td><code>previews/</code></td>
-<td>a display rendering of every sheet — <strong>not</strong> cut files</td>
+<td><code>cut-files/panpipes-E3-plain-sheet2-cut-files.svg</code></td>
+<td>plain, sheet 2: the back plate and three walls</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-plain-sheet3-cut-files.svg</code></td>
+<td>plain, sheet 3: the last three walls</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-notch-sheet1-cut-files.svg</code></td>
+<td>notch, sheet 1: the front plate with the plugs' lines, three walls and all 24 plugs</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-notch-sheet2-cut-files.svg</code></td>
+<td>notch, sheet 2: the back plate, notched over every pipe, and three walls</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-notch-sheet3-cut-files.svg</code></td>
+<td>notch, sheet 3: the last three walls</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-strip-sheet1-cut-files.svg</code></td>
+<td>strip, sheet 1: the front plate with the plugs' lines, three walls and all 24 plugs</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-strip-sheet2-cut-files.svg</code></td>
+<td>strip, sheet 2: the back plate, cut down for the strip, and three walls</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-strip-sheet3-cut-files.svg</code></td>
+<td>strip, sheet 3: the last three walls</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-strip-1.5mm-sheet1-cut-files.svg</code></td>
+<td>strip, the edge strip, on its own sheet of 1.5mm stock</td>
+</tr>
+<tr>
+<td><code>previews/panpipes-E3-chamfer-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-chamfer-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-chamfer-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-notch-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-notch-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-notch-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-plain-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-plain-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-plain-sheet3-cut-files.svg</code> · <code>previews/panpipes-E3-strip-1.5mm-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-strip-sheet1-cut-files.svg</code> · <code>previews/panpipes-E3-strip-sheet2-cut-files.svg</code> · <code>previews/panpipes-E3-strip-sheet3-cut-files.svg</code></td>
+<td>a display rendering of each sheet — <strong>not</strong> cut files</td>
 </tr>
 <tr>
 <td><code>turn.html</code></td>

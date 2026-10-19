@@ -258,13 +258,24 @@ beside this repository.
 
 ## Files
 
+Every build is three sheets of 3mm ply; the strip edge adds a fourth, of 1.5mm stock.
+
 | | |
 |---|---|
-| `cut-files/panpipes-E3-chamfer-sheet1-cut-files.svg` to `-sheet3-` | the default build: the front plate, walls and plugs; the back plate with its bevel line and walls; the last walls |
-| `cut-files/panpipes-E3-plain-sheet1-cut-files.svg` to `-sheet3-` | the plain edge |
-| `cut-files/panpipes-E3-notch-sheet1-cut-files.svg` to `-sheet3-` | the notched edge |
-| `cut-files/panpipes-E3-strip-sheet1-cut-files.svg` to `-sheet3-` · `cut-files/panpipes-E3-strip-1.5mm-sheet1-cut-files.svg` | the strip edge, and the strip on its own sheet of 1.5mm stock |
-| `previews/` | a display rendering of every sheet — **not** cut files |
+| `cut-files/panpipes-E3-chamfer-sheet1-cut-files.svg` | chamfer, sheet 1: the front plate with the plugs' lines, three walls and all 24 plugs |
+| `cut-files/panpipes-E3-chamfer-sheet2-cut-files.svg` | chamfer, sheet 2: the back plate, with the bevel's line, and three walls |
+| `cut-files/panpipes-E3-chamfer-sheet3-cut-files.svg` | chamfer, sheet 3: the last three walls |
+| `cut-files/panpipes-E3-plain-sheet1-cut-files.svg` | plain, sheet 1: the front plate with the plugs' lines, three walls and all 24 plugs |
+| `cut-files/panpipes-E3-plain-sheet2-cut-files.svg` | plain, sheet 2: the back plate and three walls |
+| `cut-files/panpipes-E3-plain-sheet3-cut-files.svg` | plain, sheet 3: the last three walls |
+| `cut-files/panpipes-E3-notch-sheet1-cut-files.svg` | notch, sheet 1: the front plate with the plugs' lines, three walls and all 24 plugs |
+| `cut-files/panpipes-E3-notch-sheet2-cut-files.svg` | notch, sheet 2: the back plate, notched over every pipe, and three walls |
+| `cut-files/panpipes-E3-notch-sheet3-cut-files.svg` | notch, sheet 3: the last three walls |
+| `cut-files/panpipes-E3-strip-sheet1-cut-files.svg` | strip, sheet 1: the front plate with the plugs' lines, three walls and all 24 plugs |
+| `cut-files/panpipes-E3-strip-sheet2-cut-files.svg` | strip, sheet 2: the back plate, cut down for the strip, and three walls |
+| `cut-files/panpipes-E3-strip-sheet3-cut-files.svg` | strip, sheet 3: the last three walls |
+| `cut-files/panpipes-E3-strip-1.5mm-sheet1-cut-files.svg` | strip, the edge strip, on its own sheet of 1.5mm stock |
+| `previews/panpipes-E3-chamfer-sheet1-cut-files.svg` · `previews/panpipes-E3-chamfer-sheet2-cut-files.svg` · `previews/panpipes-E3-chamfer-sheet3-cut-files.svg` · `previews/panpipes-E3-notch-sheet1-cut-files.svg` · `previews/panpipes-E3-notch-sheet2-cut-files.svg` · `previews/panpipes-E3-notch-sheet3-cut-files.svg` · `previews/panpipes-E3-plain-sheet1-cut-files.svg` · `previews/panpipes-E3-plain-sheet2-cut-files.svg` · `previews/panpipes-E3-plain-sheet3-cut-files.svg` · `previews/panpipes-E3-strip-1.5mm-sheet1-cut-files.svg` · `previews/panpipes-E3-strip-sheet1-cut-files.svg` · `previews/panpipes-E3-strip-sheet2-cut-files.svg` · `previews/panpipes-E3-strip-sheet3-cut-files.svg` | a display rendering of each sheet — **not** cut files |
 | `turn.html` | the 3D view, all four edges, on a page of its own |
 | `panpipes.py` | the generator, its checks, the cut files and the 3D view |
 | `README.md` · `index.html` | this writeup and its published page; the markdown is the source |
