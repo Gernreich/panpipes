@@ -9,7 +9,7 @@
      Cut the file in the repository root, not this one. -->
   <rect x="0.0" y="0.0" width="599.73" height="303.77" fill="#ffffff"/>
 <title>Panpipes E3 to E4, notch edge, sheet 1 of 3</title>
-<desc>1 user unit = 1mm. Panpipes, E3 to E4, notch edge, sheet 1 of 3: end wall, front plate, plug, wall. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the plugs' places on the front plate, on the plates' outside faces, which lie face up. Then orange #ff8000 cuts the slots, and black #000000 frees the parts.</desc>
+<desc>1 user unit = 1mm. Panpipes, E3 to E4, notch edge, sheet 1 of 3: end wall, front plate, plug, wall. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the plugs' places on the front plate and the bevel's line round every notch on the back, on the plates' outside faces, which lie face up. Then orange #ff8000 cuts the slots, and black #000000 frees the parts.</desc>
   <g fill="none" stroke="#0000ff" stroke-width="1.199">
     <path d="M 522.877,181.065 L 522.877,159.065"/>
     <path d="M 465.737,156.065 L 465.737,134.922"/>

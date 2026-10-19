@@ -39,7 +39,9 @@ after crossing the bore. --edge= picks how it is made:
            it, leaving CHAMFER_LEFT of edge on the inside of the bore
   plain    the plate as cut, a 3mm square edge. It plays, breathier
   notch    a U notch cut into the rim over every pipe, half the pipe wide, as
-           a quena's: the edge is still 3mm deep, but the jet is aimed
+           a quena's, with a blue line engraved round each one CHAMFER_DOWN
+           out from it on the outside: file a 45 degree bevel down to the line,
+           as a quena's notch is bevelled, leaving CHAMFER_LEFT of edge
   strip    the back plate stops STRIP_H short of the rim, and a strip of
            STRIP_T stock, cut from its own sheet, is glued along it with its
            inner face flush with the bore, so the edge is STRIP_T thick
@@ -190,6 +192,20 @@ def half_round_notch(yc, w, depth):
     return pts
 
 
+def notch_bevel(yc, w, depth):
+    """The bevel's line round a notch: the U's own outline moved CHAMFER_DOWN
+    out into the plate, from the rim on one side round to the rim on the other,
+    an open line to engrave."""
+    r = w / 2 + CHAMFER_DOWN
+    s = depth - w / 2
+    pts = [(0.0, yc + r)]
+    for k in range(STEPS + 1):
+        t = math.pi * k / STEPS
+        pts.append((s + r * math.sin(t), yc + r * math.cos(t)))
+    pts.append((0.0, yc - r))
+    return pts
+
+
 def plate(name, num, pipes, ys, lens, Y, edge, back):
     """A plate as seen from its outside face, x down the pipes from the rim,
     y across the raft from the lowest pipe. Slots for the inner walls, the
@@ -228,6 +244,11 @@ def plate(name, num, pipes, ys, lens, Y, edge, back):
             p.cuts.append(('poly', SF.rect(x - FINGER / 2, ys[j], x + FINGER / 2, ys[j] + T)))
     if back and edge == 'chamfer':
         p.strokes.append([(CHAMFER_DOWN, 0.0), (CHAMFER_DOWN, Y)])
+    if back and edge == 'notch':
+        for i in range(n):
+            yc = ys[i] + T + pipes[i]['w'] / 2
+            w = NOTCH_OF * pipes[i]['w']
+            p.strokes.append(notch_bevel(yc, w, w / 2 + NOTCH_PAST))
     if not back:
         for i, pp in enumerate(pipes):
             p.strokes.append([(pp['air'], ys[i] + T), (pp['air'], ys[i + 1])])
@@ -259,7 +280,7 @@ def build(pipes, edge):
     back = plate('back plate', next(num), pipes, ys, lens, Y, edge, True)
     back.note = {'chamfer': 'engraved face out; sand the rim to a 45 degree bevel down to the blue line',
                  'plain': 'its top edge is the blowing edge, as cut',
-                 'notch': 'the notches are the blowing edges, one over each pipe',
+                 'notch': 'engraved face out; file each notch to a 45 degree bevel down to its blue line',
                  'strip': f'stops {STRIP_H:g}mm short of the rim; the strip glues along that edge'}[edge]
     back.m = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, DEPTH]]
     parts.append(back)
@@ -355,6 +376,16 @@ def checks(pipes, parts, strips, info, edge, sheets):
         note(all(NOTCH_OF < 1 for p in pipes) and deepest + MIN_WEB <= first - FINGER / 2,
              'every notch stays within its pipe and clear of the joints',
              f'{widest:.1f}mm wide and {deepest:.1f}mm deep at the most')
+        back = next(q for q in parts if q.name == 'back plate')
+        lines = [st for st in back.strokes]
+        reach = max(max(x for x, y in st) for st in lines)
+        spread = max(max(y for x, y in st) - min(y for x, y in st) for st in lines)
+        over = sum(1 for st, pp in zip(lines, pipes)
+                   if max(y for x, y in st) - min(y for x, y in st) > pp['w'])
+        note(len(lines) == n and over == 0 and reach + MIN_WEB <= first - FINGER / 2,
+             'every notch has its bevel line, clear of the joints',
+             f'{len(lines)} lines, {CHAMFER_DOWN:g}mm out from each notch, reaching '
+             f'{reach:.1f}mm down and {spread:.1f}mm across, each within its pipe')
     if edge == 'chamfer':
         note(0 < CHAMFER_DOWN < T, 'the bevel leaves an edge inside the bore',
              f'{CHAMFER_LEFT:g}mm left of {T:g}mm, {CHAMFER_DOWN:g}mm down the outside')
@@ -385,7 +416,7 @@ def svg_sheet(k, n, s, what, edge, stock):
     eng = {'chamfer': 'the plugs\' places on the front plate and the bevel\'s line on the back',
            'strip': 'the plugs\' places on the front plate',
            'plain': 'the plugs\' places on the front plate',
-           'notch': 'the plugs\' places on the front plate'}[edge]
+           'notch': 'the plugs\' places on the front plate and the bevel\'s line round every notch on the back'}[edge]
     desc = (f'1 user unit = 1mm. Panpipes, E3 to E4, {edge} edge, sheet {k} of {n}: {what}. '
             f'{stock:g}mm ply, drawn for a {KERF:g}mm kerf. Blue {BLUE} engraves {eng}, '
             f'on the plates\' outside faces, which lie face up. Then orange {ORANGE} cuts '

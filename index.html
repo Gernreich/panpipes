@@ -234,9 +234,10 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <p>This is the one to start with: no extra parts, the laser marks where to stop, and a 1mm edge is in the cane pipes' range. Sand until the line just disappears, and no further; the inside face must stay untouched, since that is the edge.</p>
 <h3 id="plain-the-edge-as-cut"><code>plain</code>: the edge as cut</h3>
 <p>The back plate as it comes off the laser, a 3mm square edge. It plays: wooden panpipes drilled from a block have thick, rounded rims. Expect a breathier tone, most of all in the short high pipes, and a narrower window of aim. Cut this one if you want to hear the difference a bevel makes, and chamfer it afterwards: it is the same plate without the line.</p>
-<h3 id="notch-a-u-over-every-pipe"><code>notch</code>: a U over every pipe</h3>
-<p>A U-shaped notch is cut into the back plate's rim over each pipe, half the pipe's width across and up to 6.5mm deep, as on a quena. The notch focuses where the jet strikes, and the laser cuts it, so there is no sanding. But the edge at the bottom of the notch is still the full 3mm deep, so it is less sharp than a chamfer. It combines with one: sand a small bevel inside each notch with a round file to get both.</p>
-<p>The notch removes some of the back wall at the top of each pipe, which shortens the pipe a little acoustically; the plugs take that up.</p>
+<h3 id="notch-a-quenas-notch-over-every-pipe"><code>notch</code>: a quena's notch over every pipe</h3>
+<p>A U-shaped notch is cut into the back plate's rim over each pipe, half the pipe's width across and up to 6.5mm deep, and a blue line is engraved round each one on the back plate's outside face, 2mm out from the notch's edge. <strong>File a 45° bevel on the outside of each notch, down to its line</strong>, leaving 1mm of edge on the inside of the bore. That is a quena's notch: a U in the rim, bevelled from outside so the edge the breath strikes is thin. A small round file, or sandpaper round a dowel, follows the U.</p>
+<p>The notch gives the jet a definite place to aim, and the bevel the thin edge, so this build has both. It is the most hand work of the four: eight small curved bevels in place of one straight one. File until the line just disappears, and keep the file off the inside face, which is the edge.</p>
+<p>Notched panpipes are borrowed from the quena, not traditional: siku and nai pipes have plain rims. The notch removes some of the back wall at the top of each pipe, which shortens the pipe a little acoustically; the plugs take that up.</p>
 <h3 id="strip-a-thin-edge-glued-on"><code>strip</code>: a thin edge glued on</h3>
 <p>The back plate stops 5mm short of the rim, and a strip of <strong>1.5mm</strong> stock, 5mm tall and the raft's full width, is glued along its top edge, inner face flush with the bore, so the rim is 1.5mm thick. The walls run up past the plate to the rim, and the strip glues to their back edges as well. It is cut from its own sheet, <code>panpipes-E3-strip-1.5mm-sheet1-cut-files.svg</code>, in 1.5mm ply or veneer.</p>
 <p>This gives the thinnest edge without sanding, at the cost of a second material and a glued joint, the one glued joint in any build. The strip has no joints of its own, so its kerf hardly matters.</p>
@@ -266,8 +267,8 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 </tr>
 <tr>
 <td><code>notch</code></td>
-<td>3mm, in a 6.5mm U</td>
-<td>none, or a round file to bevel each notch</td>
+<td>1mm, at the bottom of a 6.5mm U</td>
+<td>file a 45° bevel round each notch to its line</td>
 <td>none</td>
 </tr>
 <tr>
@@ -287,14 +288,14 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <p><strong>How far a plug tunes.</strong> A millimetre of plug moves the note 3.3 cents in the E3 pipe and 6.6 cents in the E4 pipe. Pushed all the way down, into its 12mm, a plug flattens its pipe by 39 cents (E3) to 77 cents (E4), and pushed up it sharpens it as far as you like. To tune for another temperament or A, redraw with <code>--notes=</code> or move the plugs.</p>
 <p><strong>Cut it in 3mm Baltic birch plywood</strong>, at a 0.13mm kerf. The tabs and fingers are 6mm wide with no play, so the fit comes from the kerf compensation alone. <strong>If your laser's kerf is not 0.13mm, redraw the sheets for its own</strong> with <code>--kerf=</code>: a press-fit that comes out loose wants a wider kerf, one too tight to close a narrower one.</p>
 <p><strong>The longest parts are 538.9mm with the kerf</strong>, the front plate, the back plate and the end wall beside the lowest pipe. The largest sheet is 600 × 304mm, so the bed must be the full 600 × 305mm. The generator checks against it.</p>
-<p>Run the engrave first, then the cuts. <strong>Blue</strong> engraves the plugs' places on the front plate and, on the <code>chamfer</code> build, the bevel's line on the back plate. Then <strong>orange</strong> cuts the slots, and <strong>black</strong> frees the parts. Both plates are drawn outside face up, so the lines land on the outside.</p>
+<p>Run the engrave first, then the cuts. <strong>Blue</strong> engraves the plugs' places on the front plate and, on the <code>chamfer</code> and <code>notch</code> builds, the bevel's lines on the back plate. Then <strong>orange</strong> cuts the slots, and <strong>black</strong> frees the parts. Both plates are drawn outside face up, so the lines land on the outside.</p>
 <h2 id="building-it">Building it</h2>
 <ol type="1">
 <li>For the <code>strip</code> edge only: glue the strip along the back plate's cut-down top edge, inner faces flush, and let it dry. Every other edge is made after assembly.</li>
 <li>Press the nine walls into the back plate, tabs through the slots, its outside face down. The two end walls go in the notches along its long edges, the longer one beside the E3 pipe. Each inner wall fits only its own place, since every wall is a different length.</li>
 <li>Lay the front plate on, outside face up, so its blue lines show, and press it down onto the walls' tabs. Rubber bands round the raft hold it while you work along.</li>
 <li>Seal every seam with high-cut shellac, outside and inside as far as a brush on a stick reaches down each pipe from both ends. A closed pipe that leaks will not speak at its bottom note.</li>
-<li>Make the blowing edge: for <code>chamfer</code>, sand the bevel down to the line; for <code>notch</code>, file each notch's edge if you want it sharper. Round the front rim where the lip rests in every build, and shellac both rims, which are end grain.</li>
+<li>Make the blowing edge: for <code>chamfer</code>, sand the bevel down to the line; for <code>notch</code>, file each notch's bevel down to its line. Round the front rim where the lip rests in every build, and shellac both rims, which are end grain.</li>
 <li>Once the shellac is dry, press each pipe's three plug layers up into it from the bottom, one at a time, with a dowel, until the top one's face is at the pipe's blue line. Sealing first keeps shellac off the plugs, which have to stay free to move.</li>
 </ol>
 <h2 id="tuning">Tuning</h2>
@@ -319,6 +320,7 @@ python3 panpipes.py --page-to=turn.html         # the 3D view, all four edges</c
 <li>every slot keeps ply between it and the plate's edge;</li>
 <li>no tab straddles a pipe's bottom, which it reports only when one does;</li>
 <li>on the <code>notch</code> build, every notch stays within its pipe and clear of the joints;</li>
+<li>on the <code>notch</code> build, every notch has its bevel line, clear of the joints;</li>
 <li>on the <code>chamfer</code> build, the bevel leaves an edge inside the bore;</li>
 <li>no pipe is fat for its length;</li>
 <li>the longest part fits the bed;</li>
@@ -361,7 +363,7 @@ python3 panpipes.py --page-to=turn.html         # the 3D view, all four edges</c
 </tr>
 <tr>
 <td><code>cut-files/panpipes-E3-notch-sheet2-cut-files.svg</code></td>
-<td>notch, sheet 2: the back plate, notched over every pipe, and three walls</td>
+<td>notch, sheet 2: the back plate, notched over every pipe with a bevel line round each notch, and three walls</td>
 </tr>
 <tr>
 <td><code>cut-files/panpipes-E3-notch-sheet3-cut-files.svg</code></td>

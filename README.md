@@ -119,16 +119,23 @@ most of all in the short high pipes, and a narrower window of aim. Cut this one 
 you want to hear the difference a bevel makes, and chamfer it afterwards: it is the
 same plate without the line.
 
-### `notch`: a U over every pipe
+### `notch`: a quena's notch over every pipe
 
 A U-shaped notch is cut into the back plate's rim over each pipe, half the pipe's
-width across and up to 6.5mm deep, as on a quena. The notch focuses where the jet
-strikes, and the laser cuts it, so there is no sanding. But the edge at the bottom of
-the notch is still the full 3mm deep, so it is less sharp than a chamfer. It combines
-with one: sand a small bevel inside each notch with a round file to get both.
+width across and up to 6.5mm deep, and a blue line is engraved round each one on the
+back plate's outside face, 2mm out from the notch's edge. **File a 45° bevel on the
+outside of each notch, down to its line**, leaving 1mm of edge on the inside of the
+bore. That is a quena's notch: a U in the rim, bevelled from outside so the edge the
+breath strikes is thin. A small round file, or sandpaper round a dowel, follows the U.
 
-The notch removes some of the back wall at the top of each pipe, which shortens the
-pipe a little acoustically; the plugs take that up.
+The notch gives the jet a definite place to aim, and the bevel the thin edge, so this
+build has both. It is the most hand work of the four: eight small curved bevels in
+place of one straight one. File until the line just disappears, and keep the file
+off the inside face, which is the edge.
+
+Notched panpipes are borrowed from the quena, not traditional: siku and nai pipes have
+plain rims. The notch removes some of the back wall at the top of each pipe, which
+shortens the pipe a little acoustically; the plugs take that up.
 
 ### `strip`: a thin edge glued on
 
@@ -148,7 +155,7 @@ so its kerf hardly matters.
 |---|---|---|---|
 | `chamfer` | 1mm | sand a 45° bevel to the line | none |
 | `plain` | 3mm | none | none |
-| `notch` | 3mm, in a 6.5mm U | none, or a round file to bevel each notch | none |
+| `notch` | 1mm, at the bottom of a 6.5mm U | file a 45° bevel round each notch to its line | none |
 | `strip` | 1.5mm | glue the strip on | one strip of 1.5mm stock |
 
 ## Turn it in 3D
@@ -185,7 +192,7 @@ the end wall beside the lowest pipe. The largest sheet is 600 × 304mm, so the b
 must be the full 600 × 305mm. The generator checks against it.
 
 Run the engrave first, then the cuts. **Blue** engraves the plugs' places on the front
-plate and, on the `chamfer` build, the bevel's line on the back plate. Then **orange**
+plate and, on the `chamfer` and `notch` builds, the bevel's lines on the back plate. Then **orange**
 cuts the slots, and **black** frees the parts. Both plates are drawn outside face up,
 so the lines land on the outside.
 
@@ -203,7 +210,7 @@ so the lines land on the outside.
    stick reaches down each pipe from both ends. A closed pipe that leaks will not
    speak at its bottom note.
 5. Make the blowing edge: for `chamfer`, sand the bevel down to the line; for
-   `notch`, file each notch's edge if you want it sharper. Round the front rim where
+   `notch`, file each notch's bevel down to its line. Round the front rim where
    the lip rests in every build, and shellac both rims, which are end grain.
 6. Once the shellac is dry, press each pipe's three plug layers up into it from the
    bottom, one at a time, with a dowel, until the top one's face is at the pipe's blue
@@ -242,6 +249,7 @@ python3 panpipes.py --page-to=turn.html         # the 3D view, all four edges
 - every slot keeps ply between it and the plate's edge;
 - no tab straddles a pipe's bottom, which it reports only when one does;
 - on the `notch` build, every notch stays within its pipe and clear of the joints;
+- on the `notch` build, every notch has its bevel line, clear of the joints;
 - on the `chamfer` build, the bevel leaves an edge inside the bore;
 - no pipe is fat for its length;
 - the longest part fits the bed;
@@ -269,7 +277,7 @@ Every build is three sheets of 3mm ply; the strip edge adds a fourth, of 1.5mm s
 | `cut-files/panpipes-E3-plain-sheet2-cut-files.svg` | plain, sheet 2: the back plate and three walls |
 | `cut-files/panpipes-E3-plain-sheet3-cut-files.svg` | plain, sheet 3: the last three walls |
 | `cut-files/panpipes-E3-notch-sheet1-cut-files.svg` | notch, sheet 1: the front plate with the plugs' lines, three walls and all 24 plugs |
-| `cut-files/panpipes-E3-notch-sheet2-cut-files.svg` | notch, sheet 2: the back plate, notched over every pipe, and three walls |
+| `cut-files/panpipes-E3-notch-sheet2-cut-files.svg` | notch, sheet 2: the back plate, notched over every pipe with a bevel line round each notch, and three walls |
 | `cut-files/panpipes-E3-notch-sheet3-cut-files.svg` | notch, sheet 3: the last three walls |
 | `cut-files/panpipes-E3-strip-sheet1-cut-files.svg` | strip, sheet 1: the front plate with the plugs' lines, three walls and all 24 plugs |
 | `cut-files/panpipes-E3-strip-sheet2-cut-files.svg` | strip, sheet 2: the back plate, cut down for the strip, and three walls |
