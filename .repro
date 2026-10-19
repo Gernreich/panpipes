@@ -1,0 +1,42 @@
+# How every shipped SVG and page in this repository is drawn. Checked by
+# lasermade-tools/repro-svg.py; $OUT is where the file must be written.
+#
+# panpipes.py names its own sheets, so it writes into $OUT's directory and
+# the tool compares the file it asked for. It imports square_flute.py from the
+# square-flute checkout beside this one, the mitred offset from
+# four-hole-ocarinas, ribbon_bore.py from swept-curve and turn3d.py from
+# lasermade-tools, so all four are expected side by side.
+
+# --- the cut files, four edges ---
+cut-files/panpipes-E3-chamfer-sheet1-cut-files.svg :: python3 panpipes.py --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-chamfer-sheet2-cut-files.svg :: python3 panpipes.py --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-chamfer-sheet3-cut-files.svg :: python3 panpipes.py --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-notch-sheet1-cut-files.svg :: python3 panpipes.py --edge=notch --out=$(dirname $OUT)
+cut-files/panpipes-E3-notch-sheet2-cut-files.svg :: python3 panpipes.py --edge=notch --out=$(dirname $OUT)
+cut-files/panpipes-E3-notch-sheet3-cut-files.svg :: python3 panpipes.py --edge=notch --out=$(dirname $OUT)
+cut-files/panpipes-E3-plain-sheet1-cut-files.svg :: python3 panpipes.py --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-plain-sheet2-cut-files.svg :: python3 panpipes.py --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-plain-sheet3-cut-files.svg :: python3 panpipes.py --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-strip-1.5mm-sheet1-cut-files.svg :: python3 panpipes.py --edge=strip --out=$(dirname $OUT)
+cut-files/panpipes-E3-strip-sheet1-cut-files.svg :: python3 panpipes.py --edge=strip --out=$(dirname $OUT)
+cut-files/panpipes-E3-strip-sheet2-cut-files.svg :: python3 panpipes.py --edge=strip --out=$(dirname $OUT)
+cut-files/panpipes-E3-strip-sheet3-cut-files.svg :: python3 panpipes.py --edge=strip --out=$(dirname $OUT)
+
+# --- the previews, from the cut files ---
+previews/panpipes-E3-chamfer-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-chamfer-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-chamfer-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-chamfer-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-chamfer-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-chamfer-sheet3-cut-files.svg $OUT
+previews/panpipes-E3-notch-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-notch-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-notch-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-notch-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-notch-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-notch-sheet3-cut-files.svg $OUT
+previews/panpipes-E3-plain-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-plain-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-plain-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-plain-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-plain-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-plain-sheet3-cut-files.svg $OUT
+previews/panpipes-E3-strip-1.5mm-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-strip-1.5mm-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-strip-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-strip-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-strip-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-strip-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-strip-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-strip-sheet3-cut-files.svg $OUT
+
+# --- the pages ---
+turn.html :: python3 panpipes.py --page-to=$OUT
+index.html :: python3 ../lasermade-tools/md2html.py README.md $OUT

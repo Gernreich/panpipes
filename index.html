@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Panpipes</title>
+<style>
+:root{--bg:#fbfbfa;--fg:#1a1c1e;--mut:#5b6067;--line:#e2e4e7;--card:#fff;--accent:#1d4ed8;
+--codebg:#f4f5f7;--thbg:#f0f1f3;--mark:#fff8c4}
+@media (prefers-color-scheme:dark){:root{--bg:#15171a;--fg:#e6e8ea;--mut:#9aa1a9;--line:#2b2f34;
+--card:#1b1e22;--accent:#7aa2f7;--codebg:#22262b;--thbg:#23272c;--mark:#4a411c}}
+:root[data-theme=dark]{--bg:#15171a;--fg:#e6e8ea;--mut:#9aa1a9;--line:#2b2f34;--card:#1b1e22;
+--accent:#7aa2f7;--codebg:#22262b;--thbg:#23272c;--mark:#4a411c}
+:root[data-theme=light]{--bg:#fbfbfa;--fg:#1a1c1e;--mut:#5b6067;--line:#e2e4e7;--card:#fff;
+--accent:#1d4ed8;--codebg:#f4f5f7;--thbg:#f0f1f3;--mark:#fff8c4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+font:16px/1.62 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+-webkit-text-size-adjust:100%}
+.wrap{display:grid;grid-template-columns:250px minmax(0,1fr);gap:44px;max-width:1180px;
+margin:0 auto;padding:40px 28px 96px}
+nav{position:sticky;top:28px;align-self:start;max-height:calc(100vh - 56px);overflow:auto;
+border-right:1px solid var(--line);padding-right:16px;font-size:13.5px;line-height:1.45}
+nav b{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);
+margin:0 0 12px}
+nav a{display:block;color:var(--mut);text-decoration:none;padding:3px 0;border-radius:4px}
+nav a:hover{color:var(--accent)}
+nav a.l1{color:var(--fg);font-weight:640;margin-top:11px}
+nav a.l2{padding-left:12px}
+main{min-width:0}
+h1{font-size:1.62rem;line-height:1.25;letter-spacing:-.015em;margin:2.4em 0 .5em;
+padding-bottom:.32em;border-bottom:2px solid var(--line)}
+main>h1:first-child{margin-top:0;border-bottom:none;font-size:1.95rem}
+h2{font-size:1.34rem;font-weight:680;margin:2.1em 0 .6em;letter-spacing:-.012em;
+padding:.1em 0 .1em .6em;border-left:4px solid var(--accent)}
+h3{font-size:1.02rem;font-weight:650;margin:1.7em 0 .45em}
+p{margin:.85em 0}
+ul,ol{margin:.85em 0;padding-left:1.35em}
+li{margin:.3em 0}
+/* A list with blank lines between its items is "loose", and pandoc wraps each item
+   in a <p> as GitHub does. These pages were set tight before pandoc, so they stay so. */
+li>p{margin:0}
+hr{border:0;border-top:1px solid var(--line);margin:2.6em 0}
+figure{margin:1.6em 0}
+/* A paragraph holding two or more images is a gallery. Left to inline layout they
+   wrap at whatever fits, which put three bells on one row and the fourth alone
+   underneath - directly above the caption, so it read as the caption for that one
+   picture rather than for the set. Flex lets them share the row instead. */
+p:has(img + img){display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;
+justify-content:center}
+p:has(img + img) img{flex:1 1 140px;min-width:0;width:auto;max-width:100%;height:auto;
+border:1px solid var(--line);border-radius:10px}
+figure svg,figure img{display:block;width:100%;max-width:100%;height:auto;
+border:1px solid var(--line);border-radius:10px}
+/* Any other image -- one inside a link, which is not a figure -- is held to the
+   column too. A cut-sheet preview linked to its cut file drew at its own size,
+   595mm wide, and ran off the page (square-flute, 2026-10-13). */
+img{max-width:100%;height:auto}
+a{color:var(--accent)}
+code{font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+background:var(--codebg);padding:.1em .32em;border-radius:4px;
+border:1px solid color-mix(in srgb,var(--line) 70%,transparent)}
+pre{background:var(--codebg);border:1px solid var(--line);border-radius:9px;
+padding:14px 16px;overflow-x:auto;margin:1.1em 0}
+pre code{background:none;border:0;padding:0;font-size:12.8px;line-height:1.62;white-space:pre}
+blockquote{margin:1.15em 0;padding:.7em 1.1em;border-left:4px solid var(--accent);
+background:var(--codebg);border-radius:0 7px 7px 0}
+blockquote p{margin:0}
+.tw{overflow-x:auto;margin:1.15em 0;border:1px solid var(--line);border-radius:9px;
+background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:8px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+/* honour align="center" on gallery cells: a presentation attribute loses to any
+   CSS rule, so the line above would silently left-align every thumbnail caption */
+td[align=center],th[align=center]{text-align:center}
+th{background:var(--thbg);font-weight:630;white-space:nowrap;font-size:13px;
+letter-spacing:.01em}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:color-mix(in srgb,var(--thbg) 45%,transparent)}
+td code,th code{white-space:nowrap}
+/* A walk inside a link is one token: breaking it mid-walk put "N" at the end of one
+   line and "N5 U" at the start of the next, which reads as two things. */
+a code{white-space:nowrap}
+.tog{position:fixed;top:14px;right:14px;z-index:9;background:var(--card);color:var(--mut);
+border:1px solid var(--line);border-radius:7px;padding:6px 11px;font-size:12.5px;cursor:pointer}
+.tog:hover{color:var(--accent)}
+/* Below 900px the contents list moves to the top of the page, and the fixed theme
+   button sat on top of its first lines. There it scrolls away with the page instead,
+   in a strip of padding kept free for it; fixed, it would ride over the text as the
+   page scrolls, since a narrow screen has no margin for it to sit in. */
+@media (max-width:900px){.wrap{grid-template-columns:1fr;gap:20px;padding:62px 18px 72px}
+.tog{position:absolute}
+nav{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line);
+padding:0 0 16px;columns:2;column-gap:20px}}
+@media print{nav,.tog{display:none}.wrap{display:block;max-width:none;padding:0}
+pre,.tw{break-inside:avoid}h1{break-after:avoid}}
+</style>
+</head>
+<body>
+<button class="tog" type="button">theme</button>
+<div class="wrap">
+<nav><b>Contents</b><a class="l1" href="#panpipes">Panpipes</a><a class="l2" href="#the-panpipes">The panpipes</a><a class="l2" href="#the-blowing-edge">The blowing edge</a><a class="l2" href="#turn-it-in-3d">Turn it in 3D</a><a class="l2" href="#before-you-cut">Before you cut</a><a class="l2" href="#building-it">Building it</a><a class="l2" href="#tuning">Tuning</a><a class="l2" href="#regenerating-it">Regenerating it</a><a class="l2" href="#files">Files</a></nav>
+<main>
+<h1 id="panpipes">Panpipes</h1>
+<p><strong><a href="https://github.com/Gernreich/panpipes">Read the README</a></strong></p>
+<p>A low raft of panpipes in 3mm plywood: eight closed pipes from E3 to E4, the E natural minor scale, side by side between two plates. You blow across the open tops, one pipe at a time. Each pipe is stopped by a plug pressed up from its open bottom, and moving the plug tunes it.</p>
+<p>Output is millimetre-true — <code>1 user unit = 1mm</code> with a physical <code>width</code>/<code>height</code> — so it prints and cuts at real size.</p>
+<p><strong>It has not been cut or played yet.</strong> The pipe lengths come from the quarter-wave formula with a textbook end correction, and the player's lip changes that correction. The plugs are there to absorb it: <a href="#before-you-cut">Before you cut</a> says by how much.</p>
+<table>
+<tr>
+<td align="center"><a href="cut-files/panpipes-E3-chamfer-sheet1-cut-files.svg"><img src="previews/panpipes-E3-chamfer-sheet1-cut-files.svg" alt="A sheet of parts: a large plate whose bottom edge is a staircase of eight steps, rows of small slots across it and a short blue line on each step; along one long edge, small square fingers; below it three long walls with tabs on both edges, and twenty-four small squares, the plugs" width="100%"></a></td>
+</tr>
+<tr>
+<td align="center"><sub>sheet 1 of 3: the front plate, three walls and every plug</sub></td>
+</tr>
+</table>
+
+<p>Built for <strong><a href="https://www.youtube.com/@LaserMadeMusic">LaserMadeMusic</a></strong>.</p>
+<p><strong><a href="https://gernreich.github.io/">The rest of the build files</a></strong> — every instrument, generator and tool, indexed.</p>
+<p><strong><a href="https://github.com/Gernreich/panpipes/archive/refs/heads/main.zip">Download everything as a ZIP</a></strong></p>
+<h2 id="the-panpipes">The panpipes</h2>
+<div class="tw">
+<table>
+<tbody>
+<tr>
+<td>Notes</td>
+<td>E3 F♯3 G3 A3 B3 C4 D4 E4, the E natural minor scale, low to high</td>
+</tr>
+<tr>
+<td>Bore</td>
+<td>rectangular, 20mm front to back in every pipe, 22mm across the lowest narrowing to 16mm across the highest</td>
+</tr>
+<tr>
+<td>Raft</td>
+<td>179mm across, 26mm deep, 538.8mm down the longest pipe</td>
+</tr>
+<tr>
+<td>Parts</td>
+<td>35: two plates, nine walls and 24 plug layers, on three sheets of 3mm ply; the strip edge adds a strip of 1.5mm stock</td>
+</tr>
+<tr>
+<td>Joints</td>
+<td>press-fit throughout, sealed with shellac; only the strip edge is glued</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Why it stops at E3.</strong> A closed pipe sounds a quarter wavelength, so E3 needs about 518mm of air, and the pipe is cut 21mm longer again for its plug and the room to move it. D3 would need a pipe about 603mm long, and the parts must fit a 600 × 305mm bed with a margin round them.</p>
+<p><strong>Why the pipes narrow.</strong> Low pipes want a wide bore to sound full, and high ones a narrow bore to speak easily: a pipe that is short for its width plays breathy. Every pipe here is at least 12.7 times as long as the diameter of the circle of its area. The depth, front to back, stays at 20mm so the plates stay flat.</p>
+<div class="tw">
+<table>
+<thead>
+<tr>
+<th>Pipe</th>
+<th>Hz</th>
+<th>Bore</th>
+<th>Plug face, from the rim</th>
+<th>Pipe as cut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E3</td>
+<td>164.81</td>
+<td>22.00 × 20mm</td>
+<td>517.8mm</td>
+<td>538.8mm</td>
+</tr>
+<tr>
+<td>F♯3</td>
+<td>185.00</td>
+<td>21.14 × 20mm</td>
+<td>460.7mm</td>
+<td>481.7mm</td>
+</tr>
+<tr>
+<td>G3</td>
+<td>196.00</td>
+<td>20.29 × 20mm</td>
+<td>434.6mm</td>
+<td>455.6mm</td>
+</tr>
+<tr>
+<td>A3</td>
+<td>220.00</td>
+<td>19.43 × 20mm</td>
+<td>386.5mm</td>
+<td>407.5mm</td>
+</tr>
+<tr>
+<td>B3</td>
+<td>246.94</td>
+<td>18.57 × 20mm</td>
+<td>343.8mm</td>
+<td>364.8mm</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>261.63</td>
+<td>17.71 × 20mm</td>
+<td>324.3mm</td>
+<td>345.3mm</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>293.66</td>
+<td>16.86 × 20mm</td>
+<td>288.3mm</td>
+<td>309.3mm</td>
+</tr>
+<tr>
+<td>E4</td>
+<td>329.63</td>
+<td>16.00 × 20mm</td>
+<td>256.4mm</td>
+<td>277.4mm</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The tops are flush, so the rim is one straight line to blow along; the bottoms step down with the pipes. Each pipe has, from the rim down:</p>
+<ul>
+<li><strong>The air column</strong>, from the rim to the plug's face: a quarter wavelength less the open end's correction, 0.61 times the radius of the circle with the bore's area.</li>
+<li><strong>The plug</strong>: three layers of ply, each 0.12mm bigger than the bore both ways, the square flute's press-fit for its plug discs. A blue line across the front plate marks where its face goes.</li>
+<li><strong>12mm of empty pipe</strong> below the plug, so it can be pushed down to flatten the note as well as up to sharpen it.</li>
+</ul>
+<p><strong>How it goes together.</strong> The front and back plates are the faces; nine walls stand between them, one between each pair of pipes and one at each end. An inner wall has 6mm tabs about 40mm apart, through slots in both plates. The two end walls have the square flute's finger joint, a 6mm finger every 12mm, in notches in the plates' long edges, flush with the outside. An inner wall is as long as the longer of its two pipes, so it runs on past the shorter one's bottom, beside the plates' staircase edge; its tabs there are fingers in notches in that edge.</p>
+<h2 id="the-blowing-edge">The blowing edge</h2>
+<p>A panpipe speaks when a thin jet of breath, aimed across the open top, strikes the far rim, the top of the back plate, and flips in and out of the pipe. The far rim is the pipe's only edge, and <strong>its sharpness sets the tone</strong>: a sharp edge gives a clear, strong note that starts easily, and a blunt one a breathier note that needs the jet aimed more exactly. Cane panpipes have walls 1 to 2mm thick. A laser cuts 3mm ply square, which is at the blunt end of what plays.</p>
+<p><strong>The near rim</strong>, the front plate's top, is where the lower lip rests. It is not an edge and does not need to be sharp. In every build, sand it round so it is comfortable.</p>
+<p>The generator draws four blowing edges, chosen with <code>--edge=</code>; each has its own cut files and its own view in 3D. They differ only in the back plate and, for <code>strip</code>, a fourth sheet.</p>
+<h3 id="chamfer-the-default-sand-a-bevel"><code>chamfer</code>, the default: sand a bevel</h3>
+<p>The back plate is cut square, with a blue line engraved across its outside face 2mm below the rim. <strong>Sand a 45° bevel on the outside of the rim, down to the line</strong>, leaving 1mm of edge on the inside of the bore. The tops are flush, so a sanding block held at 45° along the whole raft does every pipe at once, after assembly.</p>
+<p>This is the one to start with: no extra parts, the laser marks where to stop, and a 1mm edge is in the cane pipes' range. Sand until the line just disappears, and no further; the inside face must stay untouched, since that is the edge.</p>
+<h3 id="plain-the-edge-as-cut"><code>plain</code>: the edge as cut</h3>
+<p>The back plate as it comes off the laser, a 3mm square edge. It plays: wooden panpipes drilled from a block have thick, rounded rims. Expect a breathier tone, most of all in the short high pipes, and a narrower window of aim. Cut this one if you want to hear the difference a bevel makes, and chamfer it afterwards: it is the same plate without the line.</p>
+<h3 id="notch-a-u-over-every-pipe"><code>notch</code>: a U over every pipe</h3>
+<p>A U-shaped notch is cut into the back plate's rim over each pipe, half the pipe's width across and up to 6.5mm deep, as on a quena. The notch focuses where the jet strikes, and the laser cuts it, so there is no sanding. But the edge at the bottom of the notch is still the full 3mm deep, so it is less sharp than a chamfer. It combines with one: sand a small bevel inside each notch with a round file to get both.</p>
+<p>The notch removes some of the back wall at the top of each pipe, which shortens the pipe a little acoustically; the plugs take that up.</p>
+<h3 id="strip-a-thin-edge-glued-on"><code>strip</code>: a thin edge glued on</h3>
+<p>The back plate stops 5mm short of the rim, and a strip of <strong>1.5mm</strong> stock, 5mm tall and the raft's full width, is glued along its top edge, inner face flush with the bore, so the rim is 1.5mm thick. The walls run up past the plate to the rim, and the strip glues to their back edges as well. It is cut from its own sheet, <code>panpipes-E3-strip-1.5mm-sheet1-cut-files.svg</code>, in 1.5mm ply or veneer.</p>
+<p>This gives the thinnest edge without sanding, at the cost of a second material and a glued joint, the one glued joint in any build. The strip has no joints of its own, so its kerf hardly matters.</p>
+<h3 id="which-to-cut">Which to cut</h3>
+<div class="tw">
+<table>
+<thead>
+<tr>
+<th>Edge</th>
+<th>Edge left</th>
+<th>Extra work</th>
+<th>Extra parts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>chamfer</code></td>
+<td>1mm</td>
+<td>sand a 45° bevel to the line</td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>plain</code></td>
+<td>3mm</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>notch</code></td>
+<td>3mm, in a 6.5mm U</td>
+<td>none, or a round file to bevel each notch</td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>strip</code></td>
+<td>1.5mm</td>
+<td>glue the strip on</td>
+<td>one strip of 1.5mm stock</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="turn-it-in-3d">Turn it in 3D</h2>
+<iframe src="turn.html" title="The panpipes as solid parts you can drag to turn and pull apart: a front plate, a back plate with its blowing edge along the top, the walls between the pipes and a plug in each pipe, with a button for each of the four blowing edges" style="width:100%;height:560px;border:0"></iframe>
+
+<h2 id="before-you-cut">Before you cut</h2>
+<p><strong>The end correction is a textbook figure, and the lip changes it.</strong> The pipes are cut for 0.61 times the bore's equivalent radius, an unflanged open end's. Your lower lip covers part of the opening and the raft's own width flanges it, and both make the real correction different. The whole range from 0.3 to 0.61 moves the plugs 3.1 to 3.7mm, and every plug has 12mm of pipe below it to come down into, and as far as it likes to go up. So the plugs can absorb it whichever way it falls.</p>
+<p><strong>How far a plug tunes.</strong> A millimetre of plug moves the note 3.3 cents in the E3 pipe and 6.6 cents in the E4 pipe. Pushed all the way down, into its 12mm, a plug flattens its pipe by 39 cents (E3) to 77 cents (E4), and pushed up it sharpens it as far as you like. To tune for another temperament or A, redraw with <code>--notes=</code> or move the plugs.</p>
+<p><strong>Cut it in 3mm Baltic birch plywood</strong>, at a 0.13mm kerf. The tabs and fingers are 6mm wide with no play, so the fit comes from the kerf compensation alone. <strong>If your laser's kerf is not 0.13mm, redraw the sheets for its own</strong> with <code>--kerf=</code>: a press-fit that comes out loose wants a wider kerf, one too tight to close a narrower one.</p>
+<p><strong>The longest parts are 538.9mm with the kerf</strong>, the front plate, the back plate and the end wall beside the lowest pipe. The largest sheet is 600 × 304mm, so the bed must be the full 600 × 305mm. The generator checks against it.</p>
+<p>Run the engrave first, then the cuts. <strong>Blue</strong> engraves the plugs' places on the front plate and, on the <code>chamfer</code> build, the bevel's line on the back plate. Then <strong>orange</strong> cuts the slots, and <strong>black</strong> frees the parts. Both plates are drawn outside face up, so the lines land on the outside.</p>
+<h2 id="building-it">Building it</h2>
+<ol type="1">
+<li>For the <code>strip</code> edge only: glue the strip along the back plate's cut-down top edge, inner faces flush, and let it dry. Every other edge is made after assembly.</li>
+<li>Press the nine walls into the back plate, tabs through the slots, its outside face down. The two end walls go in the notches along its long edges, the longer one beside the E3 pipe. Each inner wall fits only its own place, since every wall is a different length.</li>
+<li>Lay the front plate on, outside face up, so its blue lines show, and press it down onto the walls' tabs. Rubber bands round the raft hold it while you work along.</li>
+<li>Seal every seam with high-cut shellac, outside and inside as far as a brush on a stick reaches down each pipe from both ends. A closed pipe that leaks will not speak at its bottom note.</li>
+<li>Make the blowing edge: for <code>chamfer</code>, sand the bevel down to the line; for <code>notch</code>, file each notch's edge if you want it sharper. Round the front rim where the lip rests in every build, and shellac both rims, which are end grain.</li>
+<li>Once the shellac is dry, press each pipe's three plug layers up into it from the bottom, one at a time, with a dowel, until the top one's face is at the pipe's blue line. Sealing first keeps shellac off the plugs, which have to stay free to move.</li>
+</ol>
+<h2 id="tuning">Tuning</h2>
+<p>Blow each pipe and read its pitch with a tuner. <strong>Flat: push the plug up. Sharp: push it down.</strong> Move it a millimetre at a time; at 3.3 to 6.6 cents a millimetre, a millimetre is a lot.</p>
+<p>A plug that has gone too far up comes back down by pushing from the top with a long dowel. If a plug works loose, shellac on its edges, left to dry before it goes back in, tightens it.</p>
+<h2 id="regenerating-it">Regenerating it</h2>
+<pre class="sh"><code>python3 panpipes.py --no-write                  # the checks, writing nothing
+python3 panpipes.py --out=cut-files             # the chamfer build&#39;s sheets
+python3 panpipes.py --edge=notch --out=cut-files     # another edge: chamfer, plain, notch, strip
+python3 panpipes.py --notes=G3,A3,B3,C4,D4,E4,F#4,G4 --no-write   # other pipes, low to high
+python3 panpipes.py --end=0.4 --no-write        # a different open-end correction
+python3 panpipes.py --kerf=0.18 --out=mine      # for a laser with a 0.18mm kerf
+python3 panpipes.py --page-to=turn.html         # the 3D view, all four edges</code></pre>
+<p><code>panpipes.py</code> draws nothing until every check passes:</p>
+<ul>
+<li>every blue line on the front is its plug's face;</li>
+<li>the walls stand a bore apart;</li>
+<li>every plug is a press-fit in its bore;</li>
+<li>every plug can come down as well as go up;</li>
+<li>every pipe is walled to its bottom;</li>
+<li>the rim is clear of every joint;</li>
+<li>every slot keeps ply between it and the plate's edge;</li>
+<li>no tab straddles a pipe's bottom, which it reports only when one does;</li>
+<li>on the <code>notch</code> build, every notch stays within its pipe and clear of the joints;</li>
+<li>on the <code>chamfer</code> build, the bevel leaves an edge inside the bore;</li>
+<li>no pipe is fat for its length;</li>
+<li>the longest part fits the bed;</li>
+<li>every sheet fits the bed;</li>
+<li>every part is on a sheet.</li>
+</ul>
+<p>It imports the square flute's kerf, finger joint and packer from <code>square_flute.py</code>, and the mitred offset from the four-hole ocarinas' <code>four_hole_ocarinas.py</code>, so <a href="https://github.com/Gernreich/square-flute">square-flute</a>, <a href="https://github.com/Gernreich/four-hole-ocarinas">four-hole-ocarinas</a>, <a href="https://github.com/Gernreich/swept-curve">swept-curve</a> and <a href="https://github.com/Gernreich/lasermade-tools">lasermade-tools</a> must be checked out beside this repository.</p>
+<h2 id="files">Files</h2>
+<div class="tw">
+<table>
+<tbody>
+<tr>
+<td><code>cut-files/panpipes-E3-chamfer-sheet1-cut-files.svg</code> to <code>-sheet3-</code></td>
+<td>the default build: the front plate, walls and plugs; the back plate with its bevel line and walls; the last walls</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-plain-sheet1-cut-files.svg</code> to <code>-sheet3-</code></td>
+<td>the plain edge</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-notch-sheet1-cut-files.svg</code> to <code>-sheet3-</code></td>
+<td>the notched edge</td>
+</tr>
+<tr>
+<td><code>cut-files/panpipes-E3-strip-sheet1-cut-files.svg</code> to <code>-sheet3-</code> · <code>cut-files/panpipes-E3-strip-1.5mm-sheet1-cut-files.svg</code></td>
+<td>the strip edge, and the strip on its own sheet of 1.5mm stock</td>
+</tr>
+<tr>
+<td><code>previews/</code></td>
+<td>a display rendering of every sheet — <strong>not</strong> cut files</td>
+</tr>
+<tr>
+<td><code>turn.html</code></td>
+<td>the 3D view, all four edges, on a page of its own</td>
+</tr>
+<tr>
+<td><code>panpipes.py</code></td>
+<td>the generator, its checks, the cut files and the 3D view</td>
+</tr>
+<tr>
+<td><code>README.md</code> · <code>index.html</code></td>
+<td>this writeup and its published page; the markdown is the source</td>
+</tr>
+<tr>
+<td><code>.repro</code></td>
+<td>the command that draws each generated file</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Released under <a href="LICENSE">CC0 1.0</a>.</p>
+</main>
+</div>
+<script>
+var r=document.documentElement,b=document.querySelector('.tog');
+function set(t){r.setAttribute('data-theme',t);try{localStorage.setItem('ctg-theme',t)}catch(e){}
+b.textContent=t==='dark'?'\u2600 light':'\u263e dark';}
+var saved=null;try{saved=localStorage.getItem('ctg-theme')}catch(e){}
+set(saved||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+b.addEventListener('click',function(){set(r.getAttribute('data-theme')==='dark'?'light':'dark')});
+</script>
+</body>
+</html>
