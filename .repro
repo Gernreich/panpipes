@@ -37,6 +37,77 @@ previews/panpipes-E3-strip-sheet1-cut-files.svg :: python3 ../lasermade-tools/ma
 previews/panpipes-E3-strip-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-strip-sheet2-cut-files.svg $OUT
 previews/panpipes-E3-strip-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-strip-sheet3-cut-files.svg $OUT
 
+# --- the tube sets, from tube_panpipes.py: three shapes, their edges ---
+cut-files/panpipes-E3-hex-row-chamfer-sheet1-cut-files.svg :: python3 tube_panpipes.py --shape=hex-row --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-row-chamfer-sheet2-cut-files.svg :: python3 tube_panpipes.py --shape=hex-row --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-row-chamfer-sheet3-cut-files.svg :: python3 tube_panpipes.py --shape=hex-row --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-row-chamfer-sheet4-cut-files.svg :: python3 tube_panpipes.py --shape=hex-row --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-row-plain-sheet1-cut-files.svg :: python3 tube_panpipes.py --shape=hex-row --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-row-plain-sheet2-cut-files.svg :: python3 tube_panpipes.py --shape=hex-row --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-row-plain-sheet3-cut-files.svg :: python3 tube_panpipes.py --shape=hex-row --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-row-plain-sheet4-cut-files.svg :: python3 tube_panpipes.py --shape=hex-row --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-zigzag-chamfer-sheet1-cut-files.svg :: python3 tube_panpipes.py --shape=hex-zigzag --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-zigzag-chamfer-sheet2-cut-files.svg :: python3 tube_panpipes.py --shape=hex-zigzag --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-zigzag-chamfer-sheet3-cut-files.svg :: python3 tube_panpipes.py --shape=hex-zigzag --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-zigzag-chamfer-sheet4-cut-files.svg :: python3 tube_panpipes.py --shape=hex-zigzag --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-zigzag-notch-sheet1-cut-files.svg :: python3 tube_panpipes.py --shape=hex-zigzag --edge=notch --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-zigzag-notch-sheet2-cut-files.svg :: python3 tube_panpipes.py --shape=hex-zigzag --edge=notch --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-zigzag-notch-sheet3-cut-files.svg :: python3 tube_panpipes.py --shape=hex-zigzag --edge=notch --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-zigzag-notch-sheet4-cut-files.svg :: python3 tube_panpipes.py --shape=hex-zigzag --edge=notch --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-zigzag-plain-sheet1-cut-files.svg :: python3 tube_panpipes.py --shape=hex-zigzag --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-zigzag-plain-sheet2-cut-files.svg :: python3 tube_panpipes.py --shape=hex-zigzag --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-zigzag-plain-sheet3-cut-files.svg :: python3 tube_panpipes.py --shape=hex-zigzag --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-hex-zigzag-plain-sheet4-cut-files.svg :: python3 tube_panpipes.py --shape=hex-zigzag --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-row-chamfer-sheet1-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-row-chamfer-sheet2-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-row-chamfer-sheet3-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-row-chamfer-sheet4-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=chamfer --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-row-notch-sheet1-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=notch --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-row-notch-sheet2-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=notch --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-row-notch-sheet3-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=notch --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-row-notch-sheet4-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=notch --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-row-plain-sheet1-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-row-plain-sheet2-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-row-plain-sheet3-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=plain --out=$(dirname $OUT)
+cut-files/panpipes-E3-octagon-row-plain-sheet4-cut-files.svg :: python3 tube_panpipes.py --shape=octagon-row --edge=plain --out=$(dirname $OUT)
+
+# --- their previews ---
+previews/panpipes-E3-hex-row-chamfer-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-row-chamfer-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-hex-row-chamfer-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-row-chamfer-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-hex-row-chamfer-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-row-chamfer-sheet3-cut-files.svg $OUT
+previews/panpipes-E3-hex-row-chamfer-sheet4-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-row-chamfer-sheet4-cut-files.svg $OUT
+previews/panpipes-E3-hex-row-plain-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-row-plain-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-hex-row-plain-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-row-plain-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-hex-row-plain-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-row-plain-sheet3-cut-files.svg $OUT
+previews/panpipes-E3-hex-row-plain-sheet4-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-row-plain-sheet4-cut-files.svg $OUT
+previews/panpipes-E3-hex-zigzag-chamfer-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-zigzag-chamfer-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-hex-zigzag-chamfer-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-zigzag-chamfer-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-hex-zigzag-chamfer-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-zigzag-chamfer-sheet3-cut-files.svg $OUT
+previews/panpipes-E3-hex-zigzag-chamfer-sheet4-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-zigzag-chamfer-sheet4-cut-files.svg $OUT
+previews/panpipes-E3-hex-zigzag-notch-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-zigzag-notch-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-hex-zigzag-notch-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-zigzag-notch-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-hex-zigzag-notch-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-zigzag-notch-sheet3-cut-files.svg $OUT
+previews/panpipes-E3-hex-zigzag-notch-sheet4-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-zigzag-notch-sheet4-cut-files.svg $OUT
+previews/panpipes-E3-hex-zigzag-plain-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-zigzag-plain-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-hex-zigzag-plain-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-zigzag-plain-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-hex-zigzag-plain-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-zigzag-plain-sheet3-cut-files.svg $OUT
+previews/panpipes-E3-hex-zigzag-plain-sheet4-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-hex-zigzag-plain-sheet4-cut-files.svg $OUT
+previews/panpipes-E3-octagon-row-chamfer-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-chamfer-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-octagon-row-chamfer-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-chamfer-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-octagon-row-chamfer-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-chamfer-sheet3-cut-files.svg $OUT
+previews/panpipes-E3-octagon-row-chamfer-sheet4-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-chamfer-sheet4-cut-files.svg $OUT
+previews/panpipes-E3-octagon-row-notch-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-notch-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-octagon-row-notch-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-notch-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-octagon-row-notch-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-notch-sheet3-cut-files.svg $OUT
+previews/panpipes-E3-octagon-row-notch-sheet4-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-notch-sheet4-cut-files.svg $OUT
+previews/panpipes-E3-octagon-row-plain-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-plain-sheet1-cut-files.svg $OUT
+previews/panpipes-E3-octagon-row-plain-sheet2-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-plain-sheet2-cut-files.svg $OUT
+previews/panpipes-E3-octagon-row-plain-sheet3-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-plain-sheet3-cut-files.svg $OUT
+previews/panpipes-E3-octagon-row-plain-sheet4-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/panpipes-E3-octagon-row-plain-sheet4-cut-files.svg $OUT
+
+# --- their 3D view ---
+turn-tubes.html :: python3 tube_panpipes.py --page-to=$OUT
+
 # --- the pages ---
 turn.html :: python3 panpipes.py --page-to=$OUT
 index.html :: python3 ../lasermade-tools/md2html.py README.md $OUT

@@ -1,7 +1,8 @@
 # Names doc-audit reads as filenames that are not files here.
 #
-# square_flute.py is in square-flute and four_hole_ocarinas.py in
-# four-hole-ocarinas. panpipes.py imports both, and the README links each
-# repository.
+# square_flute.py is in square-flute, and four_hole_ocarinas.py and
+# polyhedron.py in four-hole-ocarinas. The generators import them, and the
+# README links each repository.
 square_flute.py
 four_hole_ocarinas.py
+polyhedron.py
