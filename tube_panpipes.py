@@ -483,7 +483,9 @@ def page(path_out, notes):
                                 'dark' if getattr(p, 'plug', False) else 'ply'))
         designs[shape] = {'parts': out, 'ex': 30, 'view': [-0.6, -0.3, 4.2]}
     t.write(path_out, 'Tube panpipes in 3D', designs,
-            'Drag to turn, scroll or pinch to zoom; draw Explode to take it apart. Every part is '
+            'Drag to turn; right-drag, shift-drag or move two fingers to slide the view; '
+            'scroll or pinch to zoom in on whatever is under the pointer; double-click a part '
+            'to turn round it, and Reset view to go back. Draw Explode to take it apart. Every part is '
             'the cut files’ own outline: each pipe a tube of finger-jointed strips, glued to '
             'its neighbours, with its plug, darker, at its blue line. The buttons switch between '
             'the octagonal row, the octagons in two rows, the hexagonal zigzag and the hexagonal '

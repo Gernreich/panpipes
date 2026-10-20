@@ -457,7 +457,9 @@ def page(path_out, notes):
             out.append(t.placed(prt, t.chain(up, m), ex, wood))
         designs[f'{edge} edge'] = {'parts': out, 'ex': 30, 'view': [-0.6, -0.3, 4.2]}
     t.write(path_out, 'Panpipes in 3D', designs,
-            'Drag to turn, scroll or pinch to zoom; draw Explode to take it apart. Every part is '
+            'Drag to turn; right-drag, shift-drag or move two fingers to slide the view; '
+            'scroll or pinch to zoom in on whatever is under the pointer; double-click a part '
+            'to turn round it, and Reset view to go back. Draw Explode to take it apart. Every part is '
             'the cut files’ own outline: the front plate toward you, the back plate behind '
             'with its blowing edge along the top, the walls between the pipes, and the plugs, '
             'darker, at their blue lines. The buttons switch between the four blowing edges.',
