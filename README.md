@@ -221,7 +221,7 @@ two neighbours, on faces 14.6 to 16.5mm wide, 9.4mm of it clear of the joints.
 **`hex-row`** turns the hexagons the other way, flats either side, and glues them in a
 line. A corner faces the lip, so round it off with sandpaper, and the blowing edge is
 a V of two back faces rather than one flat. That is the least conventional of the
-three to play.
+four to play.
 
 **The edges** are the raft's, on the back face of every tube:
 
