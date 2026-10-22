@@ -1,5 +1,7 @@
 # Panpipes
 
+**[← All projects](https://gernreich.github.io/)**
+
 <!-- readme-only -->
 **[Read the writeup](https://gernreich.github.io/panpipes/)** ·
 **[Turn it in 3D](https://gernreich.github.io/panpipes/#turn-it-in-3d)**
@@ -34,7 +36,7 @@ The plugs are there to absorb it: [Before you cut](#before-you-cut) says by how 
 
 Built for **[LaserMadeMusic](https://www.youtube.com/@LaserMadeMusic)**.
 
-**[The rest of the build files](https://gernreich.github.io/)** — every instrument,
+**[The rest of the build files](https://gernreich.github.io/lasermademusic.html)** — every instrument,
 generator and tool, indexed.
 
 **[Download everything as a ZIP](https://github.com/Gernreich/panpipes/archive/refs/heads/main.zip)**
