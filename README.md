@@ -8,7 +8,7 @@
 
 <!-- page-only **[Read the README](https://github.com/Gernreich/panpipes)** · **[Turn it in 3D on a page of its own](turn.html)** -->
 
-<!-- page-only <iframe src="turn.html" title="The panpipes as solid parts you can drag to turn and pull apart: a front plate, a back plate with its blowing edge along the top, the walls between the pipes and a plug in each pipe, with a button for each of the four blowing edges" style="width:100%;height:560px;border:0"></iframe> -->
+<!-- page-only <iframe src="turn.html?embed" title="The panpipes as solid parts you can drag to turn and pull apart: a front plate, a back plate with its blowing edge along the top, the walls between the pipes and a plug in each pipe, with a button for each of the four blowing edges" style="width:100%;height:560px;border:0"></iframe> -->
 
 A low raft of panpipes in 3mm plywood: eight closed pipes from E3 to E4, the E natural
 minor scale, side by side between two plates. You blow across the open tops, one pipe
@@ -245,7 +245,7 @@ four to play.
 <!-- readme-only -->
 All four sets turn in 3D on the [published page](https://gernreich.github.io/panpipes/turn-tubes.html).
 
-<!-- page-only <iframe src="turn-tubes.html" title="The four tube sets as solid parts you can drag to turn and pull apart: eight octagonal tubes in a row, eight octagonal tubes in two rows glued back to front, eight hexagonal tubes in a two-row zigzag, and eight hexagonal tubes in a row, with a button for each" style="width:100%;height:560px;border:0"></iframe> -->
+<!-- page-only <iframe src="turn-tubes.html?embed" title="The four tube sets as solid parts you can drag to turn and pull apart: eight octagonal tubes in a row, eight octagonal tubes in two rows glued back to front, eight hexagonal tubes in a two-row zigzag, and eight hexagonal tubes in a row, with a button for each" style="width:100%;height:560px;border:0"></iframe> -->
 
 ### Building a tube set
 
