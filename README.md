@@ -4,9 +4,11 @@
 
 <!-- readme-only -->
 **[Read the writeup](https://gernreich.github.io/panpipes/)** ·
-**[Turn it in 3D](https://gernreich.github.io/panpipes/#turn-it-in-3d)**
+**[Turn it in 3D](https://gernreich.github.io/panpipes/)**
 
-<!-- page-only **[Read the README](https://github.com/Gernreich/panpipes)** -->
+<!-- page-only **[Read the README](https://github.com/Gernreich/panpipes)** · **[Turn it in 3D on a page of its own](turn.html)** -->
+
+<!-- page-only <iframe src="turn.html" title="The panpipes as solid parts you can drag to turn and pull apart: a front plate, a back plate with its blowing edge along the top, the walls between the pipes and a plug in each pipe, with a button for each of the four blowing edges" style="width:100%;height:560px;border:0"></iframe> -->
 
 A low raft of panpipes in 3mm plywood: eight closed pipes from E3 to E4, the E natural
 minor scale, side by side between two plates. You blow across the open tops, one pipe
@@ -271,11 +273,11 @@ All four sets turn in 3D on the [published page](https://gernreich.github.io/pan
 ## Turn it in 3D
 
 <!-- readme-only -->
-The panpipes turn in 3D on the [published page](https://gernreich.github.io/panpipes/#turn-it-in-3d),
+The panpipes turn in 3D at the top of the [published page](https://gernreich.github.io/panpipes/),
 which GitHub does not run: drag to turn them, pull them apart into their parts, and
 switch between the four edges.
 
-<!-- page-only <iframe src="turn.html" title="The panpipes as solid parts you can drag to turn and pull apart: a front plate, a back plate with its blowing edge along the top, the walls between the pipes and a plug in each pipe, with a button for each of the four blowing edges" style="width:100%;height:560px;border:0"></iframe> -->
+<!-- page-only The 3D view is at [the top of this page](#panpipes). It also opens [on a page of its own](turn.html). -->
 
 ## Before you cut
 
