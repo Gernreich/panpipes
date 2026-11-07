@@ -60,7 +60,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-for sib in ('square-flute', 'swept-curve', 'four-hole-ocarinas', 'lasermade-tools'):
+for sib in ('square-flute', 'swept-curve', 'four-hole-ocarinas'):
     sys.path.insert(0, os.path.join(HERE, '..', sib))
 import naf_model as NM                                         # noqa: E402
 import square_flute as SF                                      # noqa: E402
@@ -432,10 +432,21 @@ def svg_sheet(k, n, s, what, edge, stock):
             + g(BLUE, blue) + g(ORANGE, orange) + g(BLACK, black) + '</svg>\n')
 
 
+
+def turn3d(path, title, designs, note, by, spin=False):
+    """Write the 3D page with lasermade-tools' turn3d program (Rust), which
+    expects that checkout beside this one, built. Each part is {'o', 'h',
+    'e'} with its placing matrix 'm' (or a list of matrices, chained), its
+    explode direction 'x' and its wood 'w'."""
+    import json
+    import subprocess
+    spec = {'title': title, 'note': note, 'by': by, 'spin': spin, 'designs': designs}
+    exe = os.path.join(HERE, '..', 'lasermade-tools', 'target', 'release', 'turn3d')
+    subprocess.run([exe, '--out=' + path], input=json.dumps(spec).encode(), check=True)
+
 def page(path_out, notes):
     """The 3D view: every edge as a design of its own, drawn from the same
     parts the sheets are, plugs at their blue lines."""
-    import turn3d as t
     # the viewer's up is +z and it looks along +y: the rim at the top, the pipes
     # hanging below it, the front plate toward the camera
     up = [[0, -1, 0, 0], [0, 0, 1, 0], [-1, 0, 0, 0], [0, 0, 0, 1]]
@@ -454,9 +465,9 @@ def page(path_out, notes):
                   if p.name == 'edge strip' else (0, 0, 0))
             wood = 'dark' if getattr(p, 'plug', False) or p.name == 'edge strip' else 'ply'
             ex = (-ex[1], ex[2], -ex[0])
-            out.append(t.placed(prt, t.chain(up, m), ex, wood))
+            out.append(dict(prt, m=[up, m], x=ex, w= wood))
         designs[f'{edge} edge'] = {'parts': out, 'ex': 30, 'view': [-0.6, -0.3, 4.2]}
-    t.write(path_out, 'Panpipes in 3D', designs,
+    turn3d(path_out, 'Panpipes in 3D', designs,
             'Drag to turn; right-drag, shift-drag or move two fingers to slide the view; '
             'scroll or pinch to zoom in on whatever is under the pointer; double-click a part '
             'to turn round it, and Reset view to go back. Draw Explode to take it apart. Every part is '

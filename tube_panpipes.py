@@ -54,7 +54,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-for sib in ('square-flute', 'swept-curve', 'four-hole-ocarinas', 'lasermade-tools'):
+for sib in ('square-flute', 'swept-curve', 'four-hole-ocarinas'):
     sys.path.insert(0, os.path.join(HERE, '..', sib))
 import panpipes as PP                                          # noqa: E402
 import square_flute as SF                                      # noqa: E402
@@ -458,9 +458,20 @@ def svg_sheet(k, n, s, shape, edge):
             + g(BLUE, blue) + g(ORANGE, orange) + g(BLACK, black) + '</svg>\n')
 
 
+
+def turn3d(path, title, designs, note, by, spin=False):
+    """Write the 3D page with lasermade-tools' turn3d program (Rust), which
+    expects that checkout beside this one, built. Each part is {'o', 'h',
+    'e'} with its placing matrix 'm' (or a list of matrices, chained), its
+    explode direction 'x' and its wood 'w'."""
+    import json
+    import subprocess
+    spec = {'title': title, 'note': note, 'by': by, 'spin': spin, 'designs': designs}
+    exe = os.path.join(HERE, '..', 'lasermade-tools', 'target', 'release', 'turn3d')
+    subprocess.run([exe, '--out=' + path], input=json.dumps(spec).encode(), check=True)
+
 def page(path_out, notes):
     """The 3D view: each shape, chamfer edge, plugs at their lines."""
-    import turn3d as t
     up = [[0, -1, 0, 0], [0, 0, 1, 0], [-1, 0, 0, 0], [0, 0, 0, 1]]
     designs = {}
     for shape in SHAPES:
@@ -479,10 +490,10 @@ def page(path_out, notes):
                 L = math.hypot(*cx) or 1
                 ex = (0, 0.9 * cx[0] / L, 0.9 * cx[1] / L)
             ex = (-ex[1], ex[2], -ex[0])
-            out.append(t.placed(prt, t.chain(up, m), ex,
-                                'dark' if getattr(p, 'plug', False) else 'ply'))
+            out.append(dict(prt, m=[up, m], x=ex,
+                            w='dark' if getattr(p, 'plug', False) else 'ply'))
         designs[shape] = {'parts': out, 'ex': 30, 'view': [-0.6, -0.3, 4.2]}
-    t.write(path_out, 'Tube panpipes in 3D', designs,
+    turn3d(path_out, 'Tube panpipes in 3D', designs,
             'Drag to turn; right-drag, shift-drag or move two fingers to slide the view; '
             'scroll or pinch to zoom in on whatever is under the pointer; double-click a part '
             'to turn round it, and Reset view to go back. Draw Explode to take it apart. Every part is '
