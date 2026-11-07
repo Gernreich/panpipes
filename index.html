@@ -285,7 +285,7 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 </table>
 </div>
 <h2 id="the-tube-sets">The tube sets</h2>
-<p><code>tube_panpipes.py</code> builds the same eight pipes another way: each pipe its own tube of 3 mm strips, finger-jointed edge to edge as the <a href="https://github.com/Gernreich/octagonal-flute" target="_blank" rel="noopener">octagonal flute</a>'s tube is, and the tubes <strong>glued to each other</strong> face to face. Separate tubes share no wall, so the glue is what holds the set together; inside each tube the joints are press-fit and sealed with shellac, as everywhere else. Each bore has the same area as the raft's pipe for the same note, 440mm² at E3 down to 320mm² at E4, so the air columns, the plugs' lines and the tuning are the raft's. <a href="#before-you-cut">Before you cut</a> applies to the tubes too: the stock, the kerf and the end correction are the same.</p>
+<p><code>tube_panpipes</code> builds the same eight pipes another way: each pipe its own tube of 3 mm strips, finger-jointed edge to edge as the <a href="https://github.com/Gernreich/octagonal-flute" target="_blank" rel="noopener">octagonal flute</a>'s tube is, and the tubes <strong>glued to each other</strong> face to face. Separate tubes share no wall, so the glue is what holds the set together; inside each tube the joints are press-fit and sealed with shellac, as everywhere else. Each bore has the same area as the raft's pipe for the same note, 440mm² at E3 down to 320mm² at E4, so the air columns, the plugs' lines and the tuning are the raft's. <a href="#before-you-cut">Before you cut</a> applies to the tubes too: the stock, the kerf and the end correction are the same.</p>
 <div class="tw">
 <table>
 <thead>
@@ -372,18 +372,20 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <p>Blow each pipe and read its pitch with a tuner. <strong>Flat: push the plug up. Sharp: push it down.</strong> Move it a millimetre at a time; at 3.3 to 6.6 cents a millimetre, a millimetre is a lot.</p>
 <p>A plug that has gone too far up comes back down by pushing from the top with a long dowel. If a plug works loose, shellac on its edges, left to dry before it goes back in, tightens it.</p>
 <h2 id="regenerating-it">Regenerating it</h2>
-<pre class="sh"><code>python3 panpipes.py --no-write                  # the checks, writing nothing
-python3 panpipes.py --out=cut-files             # the chamfer build&#39;s sheets
-python3 panpipes.py --edge=notch --out=cut-files     # another edge: chamfer, plain, notch, strip
-python3 panpipes.py --notes=G3,A3,B3,C4,D4,E4,F#4,G4 --no-write   # other pipes, low to high
-python3 panpipes.py --end=0.4 --no-write        # a different open-end correction
-python3 panpipes.py --kerf=0.18 --out=mine      # for a laser with a 0.18mm kerf
-python3 panpipes.py --page-to=turn.html         # the 3D view, all four edges
-python3 tube_panpipes.py --shape=hex-zigzag --no-write     # a tube set&#39;s checks: octagon-row, octagon-two-rows, hex-zigzag, hex-row
-python3 tube_panpipes.py --shape=octagon-row --edge=notch --out=cut-files   # its sheets
-python3 tube_panpipes.py --shape=hex-zigzag --raise=15 --no-write   # the back row 15mm taller
-python3 tube_panpipes.py --page-to=turn-tubes.html   # the tube sets&#39; 3D view</code></pre>
-<p><code>panpipes.py</code> draws nothing until every check passes:</p>
+<pre class="sh"><code>cargo build --release                       # once, and after any change
+target/release/panpipes --no-write                  # the checks, writing nothing
+target/release/panpipes --out=cut-files             # the chamfer build&#39;s sheets
+target/release/panpipes --edge=notch --out=cut-files     # another edge: chamfer, plain, notch, strip
+target/release/panpipes --notes=G3,A3,B3,C4,D4,E4,F#4,G4 --no-write   # other pipes, low to high
+target/release/panpipes --end=0.4 --no-write        # a different open-end correction
+target/release/panpipes --kerf=0.18 --out=mine      # for a laser with a 0.18mm kerf
+target/release/panpipes --page-to=turn.html         # the 3D view, all four edges
+target/release/tube_panpipes --shape=hex-zigzag --no-write     # a tube set&#39;s checks: octagon-row, octagon-two-rows, hex-zigzag, hex-row
+target/release/tube_panpipes --shape=octagon-row --edge=notch --out=cut-files   # its sheets
+target/release/tube_panpipes --shape=hex-zigzag --raise=15 --no-write   # the back row 15mm taller
+target/release/tube_panpipes --page-to=turn-tubes.html   # the tube sets&#39; 3D view</code></pre>
+<p>The generators are Rust since 2026-11-07, and Python before that: the move changed no byte of any cut file or page.</p>
+<p><code>panpipes</code> draws nothing until every check passes:</p>
 <ul>
 <li>every blue line on the front is its plug's face;</li>
 <li>the walls stand a bore apart;</li>
@@ -401,8 +403,8 @@ python3 tube_panpipes.py --page-to=turn-tubes.html   # the tube sets&#39; 3D vie
 <li>every sheet fits the bed;</li>
 <li>every part is on a sheet.</li>
 </ul>
-<p><code>tube_panpipes.py</code> checks that every blue line is its plug's face, on a face no neighbour is glued over, that every bore is the area the pipe is tuned for, that every plug is a press-fit and can come down as well as go up, that every glued face lies flat on its neighbour's and no two tubes overlap, that a face keeps ply between its two joints, that every notch and its bevel line fit the back face or every free back face has its bevel line, and the same pipe, part and sheet checks.</p>
-<p><code>panpipes.py</code> imports the square flute's kerf, finger joint and packer from <code>square_flute.py</code>, and the mitred offset from the four-hole ocarinas' <code>four_hole_ocarinas.py</code>; <code>tube_panpipes.py</code> also takes the tube's joint from their <code>polyhedron.py</code>. So <a href="https://github.com/Gernreich/square-flute" target="_blank" rel="noopener">square-flute</a>, <a href="https://github.com/Gernreich/four-hole-ocarinas" target="_blank" rel="noopener">four-hole-ocarinas</a>, <a href="https://github.com/Gernreich/swept-curve" target="_blank" rel="noopener">swept-curve</a> and <a href="https://github.com/Gernreich/lasermade-tools" target="_blank" rel="noopener">lasermade-tools</a> must be checked out beside this repository.</p>
+<p><code>tube_panpipes</code> checks that every blue line is its plug's face, on a face no neighbour is glued over, that every bore is the area the pipe is tuned for, that every plug is a press-fit and can come down as well as go up, that every glued face lies flat on its neighbour's and no two tubes overlap, that a face keeps ply between its two joints, that every notch and its bevel line fit the back face or every free back face has its bevel line, and the same pipe, part and sheet checks.</p>
+<p><code>panpipes.rs</code> builds on the square flute's kerf, finger joint and packer in <code>square_flute.rs</code>, the mitred offset in the four-hole ocarinas' <code>four_hole_ocarinas.rs</code> and swept-curve's path writer in <code>ribbon_bore.rs</code>; <code>tube_panpipes.rs</code> also takes the tube's joint from their <code>polyhedron.rs</code>. So <a href="https://github.com/Gernreich/square-flute" target="_blank" rel="noopener">square-flute</a>, <a href="https://github.com/Gernreich/four-hole-ocarinas" target="_blank" rel="noopener">four-hole-ocarinas</a>, <a href="https://github.com/Gernreich/swept-curve" target="_blank" rel="noopener">swept-curve</a> and <a href="https://github.com/Gernreich/lasermade-tools" target="_blank" rel="noopener">lasermade-tools</a> must be checked out beside this repository.</p>
 <h2 id="files">Files</h2>
 <p>Every raft build is three sheets of 3 mm ply, and the strip edge adds a fourth, of 1.5 mm stock; every tube set is four sheets.</p>
 <div class="tw">
@@ -633,12 +635,16 @@ python3 tube_panpipes.py --page-to=turn-tubes.html   # the tube sets&#39; 3D vie
 <td>the tube sets' 3D view, all four shapes</td>
 </tr>
 <tr>
-<td><code>tube_panpipes.py</code></td>
+<td><code>tube_panpipes.rs</code></td>
 <td>the tube sets' generator, its checks, cut files and 3D view</td>
 </tr>
 <tr>
-<td><code>panpipes.py</code></td>
+<td><code>panpipes.rs</code></td>
 <td>the generator, its checks, the cut files and the 3D view</td>
+</tr>
+<tr>
+<td><code>Cargo.toml</code> · <code>Cargo.lock</code></td>
+<td>the crate and its pinned build</td>
 </tr>
 <tr>
 <td><code>README.md</code> · <code>index.html</code></td>

@@ -1,0 +1,29 @@
+[package]
+name = "panpipes"
+version = "0.1.0"
+edition = "2021"
+authors = ["Michael Gernreich", "Claude (Anthropic) <noreply@anthropic.com>"]
+description = "Cut files for low panpipes, E3 to E4: the raft and the tube sets"
+license-file = "LICENSE"
+publish = false
+autobins = false
+
+# Two generators. They borrow from the checkouts beside this one: the square
+# flute's part, kerf and packing, the four-hole ocarinas' offset and solid,
+# swept-curve's path writer, and lasermade-tools for the 3D page.
+[[bin]]
+name = "panpipes"
+path = "panpipes.rs"
+
+[[bin]]
+name = "tube_panpipes"
+path = "tube_panpipes.rs"
+
+[dependencies]
+lasermade-tools = { path = "../lasermade-tools" }
+square-flute = { path = "../square-flute" }
+four-hole-ocarinas = { path = "../four-hole-ocarinas" }
+swept-curve = { path = "../swept-curve" }
+
+[profile.release]
+opt-level = 3

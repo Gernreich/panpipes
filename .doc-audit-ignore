@@ -1,8 +1,9 @@
 # Names doc-audit reads as filenames that are not files here.
 #
-# square_flute.py is in square-flute, and four_hole_ocarinas.py and
-# polyhedron.py in four-hole-ocarinas. The generators import them, and the
-# README links each repository.
-square_flute.py
-four_hole_ocarinas.py
-polyhedron.py
+# square_flute.rs is in square-flute, four_hole_ocarinas.rs and polyhedron.rs
+# in four-hole-ocarinas, and ribbon_bore.rs in swept-curve. The generators
+# build on them, and the README links each repository.
+square_flute.rs
+four_hole_ocarinas.rs
+polyhedron.rs
+ribbon_bore.rs

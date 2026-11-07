@@ -169,7 +169,7 @@ so its kerf hardly matters.
 
 ## The tube sets
 
-`tube_panpipes.py` builds the same eight pipes another way: each pipe its own tube of
+`tube_panpipes` builds the same eight pipes another way: each pipe its own tube of
 3 mm strips, finger-jointed edge to edge as the
 [octagonal flute](https://github.com/Gernreich/octagonal-flute)'s tube is, and the
 tubes **glued to each other** face to face. Separate tubes share no wall, so the glue
@@ -342,20 +342,24 @@ in, tightens it.
 ## Regenerating it
 
 ```sh
-python3 panpipes.py --no-write                  # the checks, writing nothing
-python3 panpipes.py --out=cut-files             # the chamfer build's sheets
-python3 panpipes.py --edge=notch --out=cut-files     # another edge: chamfer, plain, notch, strip
-python3 panpipes.py --notes=G3,A3,B3,C4,D4,E4,F#4,G4 --no-write   # other pipes, low to high
-python3 panpipes.py --end=0.4 --no-write        # a different open-end correction
-python3 panpipes.py --kerf=0.18 --out=mine      # for a laser with a 0.18mm kerf
-python3 panpipes.py --page-to=turn.html         # the 3D view, all four edges
-python3 tube_panpipes.py --shape=hex-zigzag --no-write     # a tube set's checks: octagon-row, octagon-two-rows, hex-zigzag, hex-row
-python3 tube_panpipes.py --shape=octagon-row --edge=notch --out=cut-files   # its sheets
-python3 tube_panpipes.py --shape=hex-zigzag --raise=15 --no-write   # the back row 15mm taller
-python3 tube_panpipes.py --page-to=turn-tubes.html   # the tube sets' 3D view
+cargo build --release                       # once, and after any change
+target/release/panpipes --no-write                  # the checks, writing nothing
+target/release/panpipes --out=cut-files             # the chamfer build's sheets
+target/release/panpipes --edge=notch --out=cut-files     # another edge: chamfer, plain, notch, strip
+target/release/panpipes --notes=G3,A3,B3,C4,D4,E4,F#4,G4 --no-write   # other pipes, low to high
+target/release/panpipes --end=0.4 --no-write        # a different open-end correction
+target/release/panpipes --kerf=0.18 --out=mine      # for a laser with a 0.18mm kerf
+target/release/panpipes --page-to=turn.html         # the 3D view, all four edges
+target/release/tube_panpipes --shape=hex-zigzag --no-write     # a tube set's checks: octagon-row, octagon-two-rows, hex-zigzag, hex-row
+target/release/tube_panpipes --shape=octagon-row --edge=notch --out=cut-files   # its sheets
+target/release/tube_panpipes --shape=hex-zigzag --raise=15 --no-write   # the back row 15mm taller
+target/release/tube_panpipes --page-to=turn-tubes.html   # the tube sets' 3D view
 ```
 
-`panpipes.py` draws nothing until every check passes:
+The generators are Rust since 2026-11-07, and Python before that: the move changed no
+byte of any cut file or page.
+
+`panpipes` draws nothing until every check passes:
 
 - every blue line on the front is its plug's face;
 - the walls stand a bore apart;
@@ -373,7 +377,7 @@ python3 tube_panpipes.py --page-to=turn-tubes.html   # the tube sets' 3D view
 - every sheet fits the bed;
 - every part is on a sheet.
 
-`tube_panpipes.py` checks that every blue line is its plug's face, on a face no
+`tube_panpipes` checks that every blue line is its plug's face, on a face no
 neighbour is glued over, that
 every bore is the area the pipe is tuned for, that every plug is a press-fit and can
 come down as well as go up, that every glued face lies flat on its neighbour's and
@@ -381,9 +385,10 @@ no two tubes overlap, that a face keeps ply between its two joints, that every n
 and its bevel line fit the back face or every free back face has its bevel line, and the
 same pipe, part and sheet checks.
 
-`panpipes.py` imports the square flute's kerf, finger joint and packer from `square_flute.py`,
-and the mitred offset from the four-hole ocarinas' `four_hole_ocarinas.py`;
-`tube_panpipes.py` also takes the tube's joint from their `polyhedron.py`. So
+`panpipes.rs` builds on the square flute's kerf, finger joint and packer in `square_flute.rs`,
+the mitred offset in the four-hole ocarinas' `four_hole_ocarinas.rs` and swept-curve's
+path writer in `ribbon_bore.rs`; `tube_panpipes.rs` also takes the tube's joint from
+their `polyhedron.rs`. So
 [square-flute](https://github.com/Gernreich/square-flute),
 [four-hole-ocarinas](https://github.com/Gernreich/four-hole-ocarinas),
 [swept-curve](https://github.com/Gernreich/swept-curve) and
@@ -452,8 +457,9 @@ Every raft build is three sheets of 3 mm ply, and the strip edge adds a fourth, 
 | `previews/panpipes-E3-chamfer-sheet1-cut-files.svg` · `previews/panpipes-E3-chamfer-sheet2-cut-files.svg` · `previews/panpipes-E3-chamfer-sheet3-cut-files.svg` · `previews/panpipes-E3-hex-row-chamfer-sheet1-cut-files.svg` · `previews/panpipes-E3-hex-row-chamfer-sheet2-cut-files.svg` · `previews/panpipes-E3-hex-row-chamfer-sheet3-cut-files.svg` · `previews/panpipes-E3-hex-row-chamfer-sheet4-cut-files.svg` · `previews/panpipes-E3-hex-row-plain-sheet1-cut-files.svg` · `previews/panpipes-E3-hex-row-plain-sheet2-cut-files.svg` · `previews/panpipes-E3-hex-row-plain-sheet3-cut-files.svg` · `previews/panpipes-E3-hex-row-plain-sheet4-cut-files.svg` · `previews/panpipes-E3-hex-zigzag-chamfer-sheet1-cut-files.svg` · `previews/panpipes-E3-hex-zigzag-chamfer-sheet2-cut-files.svg` · `previews/panpipes-E3-hex-zigzag-chamfer-sheet3-cut-files.svg` · `previews/panpipes-E3-hex-zigzag-chamfer-sheet4-cut-files.svg` · `previews/panpipes-E3-hex-zigzag-notch-sheet1-cut-files.svg` · `previews/panpipes-E3-hex-zigzag-notch-sheet2-cut-files.svg` · `previews/panpipes-E3-hex-zigzag-notch-sheet3-cut-files.svg` · `previews/panpipes-E3-hex-zigzag-notch-sheet4-cut-files.svg` · `previews/panpipes-E3-hex-zigzag-plain-sheet1-cut-files.svg` · `previews/panpipes-E3-hex-zigzag-plain-sheet2-cut-files.svg` · `previews/panpipes-E3-hex-zigzag-plain-sheet3-cut-files.svg` · `previews/panpipes-E3-hex-zigzag-plain-sheet4-cut-files.svg` · `previews/panpipes-E3-notch-sheet1-cut-files.svg` · `previews/panpipes-E3-notch-sheet2-cut-files.svg` · `previews/panpipes-E3-notch-sheet3-cut-files.svg` · `previews/panpipes-E3-octagon-row-chamfer-sheet1-cut-files.svg` · `previews/panpipes-E3-octagon-row-chamfer-sheet2-cut-files.svg` · `previews/panpipes-E3-octagon-row-chamfer-sheet3-cut-files.svg` · `previews/panpipes-E3-octagon-row-chamfer-sheet4-cut-files.svg` · `previews/panpipes-E3-octagon-row-notch-sheet1-cut-files.svg` · `previews/panpipes-E3-octagon-row-notch-sheet2-cut-files.svg` · `previews/panpipes-E3-octagon-row-notch-sheet3-cut-files.svg` · `previews/panpipes-E3-octagon-row-notch-sheet4-cut-files.svg` · `previews/panpipes-E3-octagon-row-plain-sheet1-cut-files.svg` · `previews/panpipes-E3-octagon-row-plain-sheet2-cut-files.svg` · `previews/panpipes-E3-octagon-row-plain-sheet3-cut-files.svg` · `previews/panpipes-E3-octagon-row-plain-sheet4-cut-files.svg` · `previews/panpipes-E3-octagon-two-rows-chamfer-sheet1-cut-files.svg` · `previews/panpipes-E3-octagon-two-rows-chamfer-sheet2-cut-files.svg` · `previews/panpipes-E3-octagon-two-rows-chamfer-sheet3-cut-files.svg` · `previews/panpipes-E3-octagon-two-rows-chamfer-sheet4-cut-files.svg` · `previews/panpipes-E3-octagon-two-rows-plain-sheet1-cut-files.svg` · `previews/panpipes-E3-octagon-two-rows-plain-sheet2-cut-files.svg` · `previews/panpipes-E3-octagon-two-rows-plain-sheet3-cut-files.svg` · `previews/panpipes-E3-octagon-two-rows-plain-sheet4-cut-files.svg` · `previews/panpipes-E3-plain-sheet1-cut-files.svg` · `previews/panpipes-E3-plain-sheet2-cut-files.svg` · `previews/panpipes-E3-plain-sheet3-cut-files.svg` · `previews/panpipes-E3-strip-1.5mm-sheet1-cut-files.svg` · `previews/panpipes-E3-strip-sheet1-cut-files.svg` · `previews/panpipes-E3-strip-sheet2-cut-files.svg` · `previews/panpipes-E3-strip-sheet3-cut-files.svg` | a display rendering of each sheet — **not** cut files |
 | `turn.html` | the 3D view, all four edges, on a page of its own |
 | `turn-tubes.html` | the tube sets' 3D view, all four shapes |
-| `tube_panpipes.py` | the tube sets' generator, its checks, cut files and 3D view |
-| `panpipes.py` | the generator, its checks, the cut files and the 3D view |
+| `tube_panpipes.rs` | the tube sets' generator, its checks, cut files and 3D view |
+| `panpipes.rs` | the generator, its checks, the cut files and the 3D view |
+| `Cargo.toml` · `Cargo.lock` | the crate and its pinned build |
 | `README.md` · `index.html` | this writeup and its published page; the markdown is the source |
 | `.repro` | the command that draws each generated file |
 
