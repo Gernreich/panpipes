@@ -99,7 +99,7 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <body>
 <button class="tog" type="button">theme</button>
 <div class="wrap">
-<nav><b>Contents</b><a class="l1" href="#panpipes">Panpipes</a><a class="l2" href="#the-panpipes">The panpipes</a><a class="l2" href="#the-blowing-edge">The blowing edge</a><a class="l2" href="#the-tube-sets">The tube sets</a><a class="l2" href="#turn-it-in-3d">Turn it in 3D</a><a class="l2" href="#before-you-cut">Before you cut</a><a class="l2" href="#building-it">Building it</a><a class="l2" href="#tuning">Tuning</a><a class="l2" href="#regenerating-it">Regenerating it</a><a class="l2" href="#files">Files</a><a class="l2" href="#step-files">STEP files</a><a class="l2" href="#credits">Credits</a></nav>
+<nav><b>Contents</b><a class="l1" href="#panpipes">Panpipes</a><a class="l2" href="#the-panpipes">The panpipes</a><a class="l2" href="#the-blowing-edge">The blowing edge</a><a class="l2" href="#the-tube-sets">The tube sets</a><a class="l2" href="#turn-it-in-3d">Turn it in 3D</a><a class="l2" href="#before-you-cut">Before you cut</a><a class="l2" href="#building-it">Building it</a><a class="l2" href="#tuning">Tuning</a><a class="l2" href="#regenerating-it">Regenerating it</a><a class="l2" href="#files">Files</a><a class="l2" href="#solidcraft-designs">SolidCraft designs</a><a class="l2" href="#step-files">STEP files</a><a class="l2" href="#credits">Credits</a></nav>
 <main>
 <h1 id="panpipes">Panpipes</h1>
 <p><strong><a href="https://gernreich.github.io/" target="_blank" rel="noopener">← All projects</a></strong></p>
@@ -383,7 +383,9 @@ target/release/panpipes --page-to=turn.html         # the 3D view, all four edge
 target/release/tube_panpipes --shape=hex-zigzag --no-write     # a tube set&#39;s checks: octagon-row, octagon-two-rows, hex-zigzag, hex-row
 target/release/tube_panpipes --shape=octagon-row --edge=notch --out=cut-files   # its sheets
 target/release/tube_panpipes --shape=hex-zigzag --raise=15 --no-write   # the back row 15mm taller
-target/release/tube_panpipes --page-to=turn-tubes.html   # the tube sets&#39; 3D view</code></pre>
+target/release/tube_panpipes --page-to=turn-tubes.html   # the tube sets&#39; 3D view
+target/release/panpipes --edge=strip --no-write --solidcraft=solidcraft   # a build as a SolidCraft design
+target/release/tube_panpipes --shape=hex-row --no-write --solidcraft=solidcraft</code></pre>
 <p>The generators are Rust since 2026-11-07, and Python before that: the move changed no byte of any cut file or page.</p>
 <p><code>panpipes</code> draws nothing until every check passes:</p>
 <ul>
@@ -643,6 +645,10 @@ target/release/tube_panpipes --page-to=turn-tubes.html   # the tube sets&#39; 3D
 <td>the generator, its checks, the cut files and the 3D view</td>
 </tr>
 <tr>
+<td><code>raft_solidcraft.rs</code> · <code>tubes_solidcraft.rs</code> · <code>solidcraft/</code></td>
+<td>the raft and the tube sets as parametric SolidCraft designs</td>
+</tr>
+<tr>
 <td><code>Cargo.toml</code> · <code>Cargo.lock</code></td>
 <td>the crate and its pinned build</td>
 </tr>
@@ -658,11 +664,89 @@ target/release/tube_panpipes --page-to=turn-tubes.html   # the tube sets&#39; 3D
 </table>
 </div>
 <p>Released under <a href="LICENSE" target="_blank" rel="noopener">CC0 1.0</a>.</p>
+<h2 id="solidcraft-designs">SolidCraft designs</h2>
+<p>Both generators also write every build as a parametric SolidCraft design, in <code>solidcraft/</code>: every rule they follow is an expression in it, so changing one number rebuilds the rest. Build one with <code>solidcraft-cli run FILE --save NAME.sc</code> and open the <code>.sc</code> in SolidCraft:</p>
+<ul>
+<li><code>solidcraft/panpipes-chamfer-edge.solidcraft.json</code></li>
+<li><code>solidcraft/panpipes-plain-edge.solidcraft.json</code></li>
+<li><code>solidcraft/panpipes-notch-edge.solidcraft.json</code></li>
+<li><code>solidcraft/panpipes-strip-edge.solidcraft.json</code></li>
+<li><code>solidcraft/panpipes-tubes-octagon-row-chamfer.solidcraft.json</code></li>
+<li><code>solidcraft/panpipes-tubes-octagon-row-plain.solidcraft.json</code></li>
+<li><code>solidcraft/panpipes-tubes-octagon-row-notch.solidcraft.json</code></li>
+<li><code>solidcraft/panpipes-tubes-octagon-two-rows-chamfer.solidcraft.json</code></li>
+<li><code>solidcraft/panpipes-tubes-octagon-two-rows-plain.solidcraft.json</code></li>
+<li><code>solidcraft/panpipes-tubes-hex-zigzag-chamfer.solidcraft.json</code></li>
+<li><code>solidcraft/panpipes-tubes-hex-zigzag-plain.solidcraft.json</code></li>
+<li><code>solidcraft/panpipes-tubes-hex-zigzag-notch.solidcraft.json</code></li>
+<li><code>solidcraft/panpipes-tubes-hex-row-chamfer.solidcraft.json</code></li>
+<li><code>solidcraft/panpipes-tubes-hex-row-plain.solidcraft.json</code></li>
+</ul>
+<div class="tw">
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>f_1</code> … <code>f_8</code></td>
+<td>E3 … E4</td>
+<td>each pipe's note, Hz. Type a frequency and the pipe, its plug, the walls and every joint follow. Keep them rising</td>
+</tr>
+<tr>
+<td><code>ply</code></td>
+<td>3 mm</td>
+<td>sheet thickness: plates, walls, strips, plug layers and the joints' depth</td>
+</tr>
+<tr>
+<td><code>temp_c</code> · <code>a4</code> · <code>end</code></td>
+<td>25 · 440 · 0.61</td>
+<td>the breath's temperature, concert pitch, the open end's correction (<code>--end=</code>)</td>
+</tr>
+<tr>
+<td><code>spare</code></td>
+<td>12 mm</td>
+<td>empty pipe below each plug, to flatten into</td>
+</tr>
+<tr>
+<td><code>depth</code> · <code>w_low</code> · <code>w_high</code></td>
+<td>20 · 22 · 16 mm</td>
+<td>the raft's bores: front to back, and across at each end of the scale</td>
+</tr>
+<tr>
+<td><code>area_low</code> · <code>area_high</code></td>
+<td>440 · 320 mm²</td>
+<td>a tube set's bore areas at each end of the scale</td>
+</tr>
+<tr>
+<td><code>finger</code> · <code>tab_pitch</code> · <code>over_clear</code></td>
+<td>6 · 40 · 4 mm</td>
+<td>the raft's fingers (twice <code>ply</code>), its inner walls' tab spacing and the wall kept round a tab below a shorter pipe; a tube set's <code>finger</code> is its shortest joint cell</td>
+</tr>
+<tr>
+<td><code>interf</code></td>
+<td>0.12 mm</td>
+<td>each plug's press-fit</td>
+</tr>
+<tr>
+<td><code>chamfer_left</code> · <code>notch_of</code> · <code>notch_past</code> · <code>strip_h</code> · <code>strip_t</code> · <code>raise</code></td>
+<td>as the generators</td>
+<td>the blowing edge's sizes, where the build has them, and the zigzag's back row</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Read-only parameters show the results: each pipe's <code>air_</code> and <code>len_</code>, where the walls or the tubes' axes stand, the tab and cell counts, the raft's width, and <code>bed_room</code>, what the laser's bed leaves past the longest pipe. Below 0 the build no longer fits: C3 at the bottom of the raft is 675 mm long, against the bed's 590 mm.</p>
+<p>The chamfer is drawn sanded, down to its blue line. The notch's U is cut, but its filed bevel and the engraved lines are left out. On <code>octagon-two-rows</code> the front row's back faces are glued to the back row and stay as cut.</p>
+<p><strong>Checked</strong> body by body against the generators' own parts, as the earlier STEP files held them: every wall, plate, strip and plug matches to within 0.006 mm, the precision those files were written to. The exceptions are the sanded bevel, and the notches' true half-circles where the cut files have straight runs (about 6 mm³ over the raft's eight). The raft retuned to F3 to F4 matches the generator's build for those notes. Retuned, with <code>ply</code> at 3.2 or 3.3 mm, or with wider bores, every design rebuilds with no two parts overlapping but the plugs' press-fit.</p>
 <h2 id="step-files">STEP files</h2>
-<p><code>step/</code> holds the 3D view as STEP files, one per design, to open or import in a CAD program such as SolidCraft, Fusion or FreeCAD: one solid body per part, in millimetres, assembled as the view shows it. Every face is flat, so a curve comes in as short straight runs; engraving has no depth and is left out. They are written from <code>turn.html</code> and <code>turn-tubes.html</code> by lasermade-tools' <code>step-export</code>, and <code>.repro</code> checks them:</p>
-<pre><code>../lasermade-tools/target/release/step-export turn.html --name=panpipes
-../lasermade-tools/target/release/step-export turn-tubes.html --name=panpipes-tubes</code></pre>
-<p>The files:</p>
+<p><code>step/</code> holds the 3D view as STEP files, one per design, to open or import in a CAD program such as SolidCraft, Fusion or FreeCAD: one solid body per part, in millimetres, assembled as the view shows it, the notches' bottoms true arcs and the chamfer sanded. SolidCraft writes them from the designs above, the tube sets with the chamfer edge, and <code>.repro</code> checks them:</p>
+<pre><code>target/release/panpipes --edge=notch --no-write --solidcraft=solidcraft
+solidcraft-cli run solidcraft/panpipes-notch-edge.solidcraft.json --out step/panpipes-notch-edge.step</code></pre>
 <ul>
 <li><code>step/panpipes-chamfer-edge.step</code></li>
 <li><code>step/panpipes-notch-edge.step</code></li>

@@ -7,6 +7,7 @@
 //!     target/release/tube_panpipes --shape=hex-row --edge=plain ...    # another edge
 //!     target/release/tube_panpipes --kerf=0.18 ...                     # for that kerf
 //!     target/release/tube_panpipes --page-to=turn-tubes.html           # the 3D view
+//!     target/release/tube_panpipes --shape=hex-row --solidcraft=DIR    # the parametric SolidCraft design
 //!
 //! EACH PIPE is a tube of N strips of 3mm ply, finger-jointed edge to edge by
 //! the four-hole ocarinas' polyhedron joint, as the octagonal flute's tube
@@ -49,6 +50,7 @@
 //!            row's back faces are glued to the back row
 #[path = "panpipes.rs"]
 mod pp;
+mod tubes_solidcraft;
 
 use four_hole_ocarinas::offset;
 use four_hole_ocarinas::polyhedron::{self as ph, Edge, Face, V3};
@@ -679,6 +681,7 @@ fn page(path_out: &str, notes: &[String], end: f64, raise: f64) {
 
 fn main() {
     let (mut out, mut write, mut page_to) = (None::<String>, true, None::<String>);
+    let mut solidcraft = None::<String>;
     let (mut shape, mut edge) = ("octagon-row".to_string(), "chamfer".to_string());
     let mut notes: Vec<String> = pp::NOTES.iter().map(|s| s.to_string()).collect();
     let (mut end, mut raise) = (pp::END, RAISE);
@@ -710,9 +713,11 @@ fn main() {
             sf::set_kerf(&x);
         } else if x.starts_with("--page-to=") {
             page_to = Some(val());
+        } else if x.starts_with("--solidcraft=") {
+            solidcraft = Some(val());
         } else {
             die(format!(
-                "error: {x} is not a flag this generator reads. It takes --out=, --shape=, --edge=, --notes=, --raise=, --end=, --kerf=, --page-to= and --no-write."
+                "error: {x} is not a flag this generator reads. It takes --out=, --shape=, --edge=, --notes=, --raise=, --end=, --kerf=, --page-to=, --solidcraft= and --no-write."
             ));
         }
     }
@@ -756,6 +761,12 @@ fn main() {
     }
     if print_checks(&res, 56) > 0 {
         std::process::exit(1);
+    }
+    if let Some(dir) = &solidcraft {
+        pp::mkdirs(dir);
+        let f = pp::join(dir, &format!("panpipes-tubes-{shape}-{edge}.solidcraft.json"));
+        pp::write_file(&f, &tubes_solidcraft::script(&pipes, &shape, &edge, end, raise));
+        println!("  wrote {}", pp::basename(&f));
     }
     if write {
         let out = out.unwrap();

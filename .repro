@@ -127,13 +127,30 @@ turn-tubes.html :: target/release/tube_panpipes --page-to=$OUT
 turn.html :: target/release/panpipes --page-to=$OUT
 index.html :: ../lasermade-tools/target/release/md2html README.md $OUT
 
-# --- the STEP files: the 3D view's parts as solids for a CAD program, one
-# file per design, written from the page by lasermade-tools' step-export ---
-step/panpipes-chamfer-edge.step :: ../lasermade-tools/target/release/step-export turn.html --name=panpipes --out=$(dirname $OUT)
-step/panpipes-plain-edge.step :: ../lasermade-tools/target/release/step-export turn.html --name=panpipes --out=$(dirname $OUT)
-step/panpipes-notch-edge.step :: ../lasermade-tools/target/release/step-export turn.html --name=panpipes --out=$(dirname $OUT)
-step/panpipes-strip-edge.step :: ../lasermade-tools/target/release/step-export turn.html --name=panpipes --out=$(dirname $OUT)
-step/panpipes-tubes-octagon-row.step :: ../lasermade-tools/target/release/step-export turn-tubes.html --name=panpipes-tubes --out=$(dirname $OUT)
-step/panpipes-tubes-octagon-two-rows.step :: ../lasermade-tools/target/release/step-export turn-tubes.html --name=panpipes-tubes --out=$(dirname $OUT)
-step/panpipes-tubes-hex-zigzag.step :: ../lasermade-tools/target/release/step-export turn-tubes.html --name=panpipes-tubes --out=$(dirname $OUT)
-step/panpipes-tubes-hex-row.step :: ../lasermade-tools/target/release/step-export turn-tubes.html --name=panpipes-tubes --out=$(dirname $OUT)
+# --- the SolidCraft designs: every build as a parametric SolidCraft script,
+# written by the generators from the same rules as the cut files ---
+solidcraft/panpipes-chamfer-edge.solidcraft.json :: target/release/panpipes --edge=chamfer --no-write --solidcraft=$(dirname $OUT)
+solidcraft/panpipes-plain-edge.solidcraft.json :: target/release/panpipes --edge=plain --no-write --solidcraft=$(dirname $OUT)
+solidcraft/panpipes-notch-edge.solidcraft.json :: target/release/panpipes --edge=notch --no-write --solidcraft=$(dirname $OUT)
+solidcraft/panpipes-strip-edge.solidcraft.json :: target/release/panpipes --edge=strip --no-write --solidcraft=$(dirname $OUT)
+solidcraft/panpipes-tubes-octagon-row-chamfer.solidcraft.json :: target/release/tube_panpipes --shape=octagon-row --edge=chamfer --no-write --solidcraft=$(dirname $OUT)
+solidcraft/panpipes-tubes-octagon-row-plain.solidcraft.json :: target/release/tube_panpipes --shape=octagon-row --edge=plain --no-write --solidcraft=$(dirname $OUT)
+solidcraft/panpipes-tubes-octagon-row-notch.solidcraft.json :: target/release/tube_panpipes --shape=octagon-row --edge=notch --no-write --solidcraft=$(dirname $OUT)
+solidcraft/panpipes-tubes-octagon-two-rows-chamfer.solidcraft.json :: target/release/tube_panpipes --shape=octagon-two-rows --edge=chamfer --no-write --solidcraft=$(dirname $OUT)
+solidcraft/panpipes-tubes-octagon-two-rows-plain.solidcraft.json :: target/release/tube_panpipes --shape=octagon-two-rows --edge=plain --no-write --solidcraft=$(dirname $OUT)
+solidcraft/panpipes-tubes-hex-zigzag-chamfer.solidcraft.json :: target/release/tube_panpipes --shape=hex-zigzag --edge=chamfer --no-write --solidcraft=$(dirname $OUT)
+solidcraft/panpipes-tubes-hex-zigzag-plain.solidcraft.json :: target/release/tube_panpipes --shape=hex-zigzag --edge=plain --no-write --solidcraft=$(dirname $OUT)
+solidcraft/panpipes-tubes-hex-zigzag-notch.solidcraft.json :: target/release/tube_panpipes --shape=hex-zigzag --edge=notch --no-write --solidcraft=$(dirname $OUT)
+solidcraft/panpipes-tubes-hex-row-chamfer.solidcraft.json :: target/release/tube_panpipes --shape=hex-row --edge=chamfer --no-write --solidcraft=$(dirname $OUT)
+solidcraft/panpipes-tubes-hex-row-plain.solidcraft.json :: target/release/tube_panpipes --shape=hex-row --edge=plain --no-write --solidcraft=$(dirname $OUT)
+
+# --- the STEP files, written by SolidCraft (solidcraft-cli, on PATH) from
+# those designs: the raft's four edges, and each tube set with the chamfer ---
+step/panpipes-chamfer-edge.step :: target/release/panpipes --edge=chamfer --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/panpipes-chamfer-edge.solidcraft.json --out $OUT --quiet
+step/panpipes-plain-edge.step :: target/release/panpipes --edge=plain --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/panpipes-plain-edge.solidcraft.json --out $OUT --quiet
+step/panpipes-notch-edge.step :: target/release/panpipes --edge=notch --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/panpipes-notch-edge.solidcraft.json --out $OUT --quiet
+step/panpipes-strip-edge.step :: target/release/panpipes --edge=strip --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/panpipes-strip-edge.solidcraft.json --out $OUT --quiet
+step/panpipes-tubes-octagon-row.step :: target/release/tube_panpipes --shape=octagon-row --edge=chamfer --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/panpipes-tubes-octagon-row-chamfer.solidcraft.json --out $OUT --quiet
+step/panpipes-tubes-octagon-two-rows.step :: target/release/tube_panpipes --shape=octagon-two-rows --edge=chamfer --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/panpipes-tubes-octagon-two-rows-chamfer.solidcraft.json --out $OUT --quiet
+step/panpipes-tubes-hex-zigzag.step :: target/release/tube_panpipes --shape=hex-zigzag --edge=chamfer --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/panpipes-tubes-hex-zigzag-chamfer.solidcraft.json --out $OUT --quiet
+step/panpipes-tubes-hex-row.step :: target/release/tube_panpipes --shape=hex-row --edge=chamfer --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/panpipes-tubes-hex-row-chamfer.solidcraft.json --out $OUT --quiet

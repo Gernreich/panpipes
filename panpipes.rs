@@ -9,6 +9,7 @@
 //!     target/release/panpipes --end=0.7 ...             # the open end's correction
 //!     target/release/panpipes --kerf=0.18 ...           # for a laser with that kerf
 //!     target/release/panpipes --page-to=turn.html       # the 3D view, every edge
+//!     target/release/panpipes --solidcraft=DIR          # the parametric SolidCraft design
 //!
 //! THE RAFT is two plates, the front and the back, with a wall between every
 //! pair of pipes and one at each end. An inner wall has FINGER wide tabs,
@@ -54,6 +55,7 @@
 //! ocarinas' and the path writer swept-curve's: each checkout is expected
 //! beside this one, with lasermade-tools for the 3D page.
 #![allow(dead_code)]
+mod raft_solidcraft;
 use four_hole_ocarinas::offset;
 use lasermade_tools::die;
 use lasermade_tools::py::{self, g};
@@ -728,6 +730,7 @@ pub fn join(dir: &str, f: &str) -> String {
 
 fn main() {
     let (mut out, mut write, mut edge, mut page_to) = (None::<String>, true, "chamfer".to_string(), None::<String>);
+    let mut solidcraft = None::<String>;
     let mut notes: Vec<String> = NOTES.iter().map(|s| s.to_string()).collect();
     let mut end = END;
     for x in std::env::args().skip(1) {
@@ -749,9 +752,11 @@ fn main() {
             sf::set_kerf(&x);
         } else if x.starts_with("--page-to=") {
             page_to = Some(val());
+        } else if x.starts_with("--solidcraft=") {
+            solidcraft = Some(val());
         } else {
             die(format!(
-                "error: {x} is not a flag this generator reads. It takes --out=, --edge=, --notes=, --end=, --kerf=, --page-to= and --no-write."
+                "error: {x} is not a flag this generator reads. It takes --out=, --edge=, --notes=, --end=, --kerf=, --page-to=, --solidcraft= and --no-write."
             ));
         }
     }
@@ -791,6 +796,12 @@ fn main() {
     }
     if print_checks(&res, 56) > 0 {
         std::process::exit(1);
+    }
+    if let Some(dir) = &solidcraft {
+        mkdirs(dir);
+        let f = join(dir, &format!("panpipes-{edge}-edge.solidcraft.json"));
+        write_file(&f, &raft_solidcraft::script(&pipes, &edge, end));
+        println!("  wrote {}", basename(&f));
     }
     if write {
         let out = out.unwrap();

@@ -354,6 +354,8 @@ target/release/tube_panpipes --shape=hex-zigzag --no-write     # a tube set's ch
 target/release/tube_panpipes --shape=octagon-row --edge=notch --out=cut-files   # its sheets
 target/release/tube_panpipes --shape=hex-zigzag --raise=15 --no-write   # the back row 15mm taller
 target/release/tube_panpipes --page-to=turn-tubes.html   # the tube sets' 3D view
+target/release/panpipes --edge=strip --no-write --solidcraft=solidcraft   # a build as a SolidCraft design
+target/release/tube_panpipes --shape=hex-row --no-write --solidcraft=solidcraft
 ```
 
 The generators are Rust since 2026-11-07, and Python before that: the move changed no
@@ -459,26 +461,76 @@ Every raft build is three sheets of 3 mm ply, and the strip edge adds a fourth, 
 | `turn-tubes.html` | the tube sets' 3D view, all four shapes |
 | `tube_panpipes.rs` | the tube sets' generator, its checks, cut files and 3D view |
 | `panpipes.rs` | the generator, its checks, the cut files and the 3D view |
+| `raft_solidcraft.rs` · `tubes_solidcraft.rs` · `solidcraft/` | the raft and the tube sets as parametric SolidCraft designs |
 | `Cargo.toml` · `Cargo.lock` | the crate and its pinned build |
 | `README.md` · `index.html` | this writeup and its published page; the markdown is the source |
 | `.repro` | the command that draws each generated file |
 
 Released under [CC0 1.0](LICENSE).
 
+## SolidCraft designs
+
+Both generators also write every build as a parametric SolidCraft design, in
+`solidcraft/`: every rule they follow is an expression in it, so changing one number
+rebuilds the rest. Build one with `solidcraft-cli run FILE --save NAME.sc` and open the
+`.sc` in SolidCraft:
+
+- `solidcraft/panpipes-chamfer-edge.solidcraft.json`
+- `solidcraft/panpipes-plain-edge.solidcraft.json`
+- `solidcraft/panpipes-notch-edge.solidcraft.json`
+- `solidcraft/panpipes-strip-edge.solidcraft.json`
+- `solidcraft/panpipes-tubes-octagon-row-chamfer.solidcraft.json`
+- `solidcraft/panpipes-tubes-octagon-row-plain.solidcraft.json`
+- `solidcraft/panpipes-tubes-octagon-row-notch.solidcraft.json`
+- `solidcraft/panpipes-tubes-octagon-two-rows-chamfer.solidcraft.json`
+- `solidcraft/panpipes-tubes-octagon-two-rows-plain.solidcraft.json`
+- `solidcraft/panpipes-tubes-hex-zigzag-chamfer.solidcraft.json`
+- `solidcraft/panpipes-tubes-hex-zigzag-plain.solidcraft.json`
+- `solidcraft/panpipes-tubes-hex-zigzag-notch.solidcraft.json`
+- `solidcraft/panpipes-tubes-hex-row-chamfer.solidcraft.json`
+- `solidcraft/panpipes-tubes-hex-row-plain.solidcraft.json`
+
+| Parameter | Default | What it is |
+|---|---|---|
+| `f_1` … `f_8` | E3 … E4 | each pipe's note, Hz. Type a frequency and the pipe, its plug, the walls and every joint follow. Keep them rising |
+| `ply` | 3 mm | sheet thickness: plates, walls, strips, plug layers and the joints' depth |
+| `temp_c` · `a4` · `end` | 25 · 440 · 0.61 | the breath's temperature, concert pitch, the open end's correction (`--end=`) |
+| `spare` | 12 mm | empty pipe below each plug, to flatten into |
+| `depth` · `w_low` · `w_high` | 20 · 22 · 16 mm | the raft's bores: front to back, and across at each end of the scale |
+| `area_low` · `area_high` | 440 · 320 mm² | a tube set's bore areas at each end of the scale |
+| `finger` · `tab_pitch` · `over_clear` | 6 · 40 · 4 mm | the raft's fingers (twice `ply`), its inner walls' tab spacing and the wall kept round a tab below a shorter pipe; a tube set's `finger` is its shortest joint cell |
+| `interf` | 0.12 mm | each plug's press-fit |
+| `chamfer_left` · `notch_of` · `notch_past` · `strip_h` · `strip_t` · `raise` | as the generators | the blowing edge's sizes, where the build has them, and the zigzag's back row |
+
+Read-only parameters show the results: each pipe's `air_` and `len_`, where the walls
+or the tubes' axes stand, the tab and cell counts, the raft's width, and `bed_room`,
+what the laser's bed leaves past the longest pipe. Below 0 the build no longer fits:
+C3 at the bottom of the raft is 675 mm long, against the bed's 590 mm.
+
+The chamfer is drawn sanded, down to its blue line. The notch's U is cut, but its
+filed bevel and the engraved lines are left out. On `octagon-two-rows` the front
+row's back faces are glued to the back row and stay as cut.
+
+**Checked** body by body against the generators' own parts, as the earlier STEP files
+held them: every wall, plate, strip and plug matches to within 0.006 mm, the precision
+those files were written to. The exceptions are the sanded bevel, and the notches' true
+half-circles where the cut files have straight runs (about 6 mm³ over the raft's eight).
+The raft retuned to F3 to F4 matches the generator's build for those notes. Retuned, with
+`ply` at 3.2 or 3.3 mm, or with wider bores, every design rebuilds with no two parts
+overlapping but the plugs' press-fit.
+
 ## STEP files
 
 `step/` holds the 3D view as STEP files, one per design, to open or import in a
 CAD program such as SolidCraft, Fusion or FreeCAD: one solid body per part, in
-millimetres, assembled as the view shows it. Every face is flat, so a curve comes
-in as short straight runs; engraving has no depth and is left out. They are written
-from `turn.html` and `turn-tubes.html` by lasermade-tools' `step-export`, and `.repro` checks them:
+millimetres, assembled as the view shows it, the notches' bottoms true arcs and the
+chamfer sanded. SolidCraft writes them from the designs above, the tube sets with the
+chamfer edge, and `.repro` checks them:
 
 ```
-../lasermade-tools/target/release/step-export turn.html --name=panpipes
-../lasermade-tools/target/release/step-export turn-tubes.html --name=panpipes-tubes
+target/release/panpipes --edge=notch --no-write --solidcraft=solidcraft
+solidcraft-cli run solidcraft/panpipes-notch-edge.solidcraft.json --out step/panpipes-notch-edge.step
 ```
-
-The files:
 
 - `step/panpipes-chamfer-edge.step`
 - `step/panpipes-notch-edge.step`
