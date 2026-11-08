@@ -472,23 +472,29 @@ Released under [CC0 1.0](LICENSE).
 
 Both generators also write every build as a parametric SolidCraft design, in
 `solidcraft/`: every rule they follow is an expression in it, so changing one number
-rebuilds the rest. Build one with `solidcraft-cli run FILE --save NAME.sc` and open the
-`.sc` in SolidCraft:
+rebuilds the rest.
 
-- `solidcraft/panpipes-chamfer-edge.solidcraft.json`
-- `solidcraft/panpipes-plain-edge.solidcraft.json`
-- `solidcraft/panpipes-notch-edge.solidcraft.json`
-- `solidcraft/panpipes-strip-edge.solidcraft.json`
-- `solidcraft/panpipes-tubes-octagon-row-chamfer.solidcraft.json`
-- `solidcraft/panpipes-tubes-octagon-row-plain.solidcraft.json`
-- `solidcraft/panpipes-tubes-octagon-row-notch.solidcraft.json`
-- `solidcraft/panpipes-tubes-octagon-two-rows-chamfer.solidcraft.json`
-- `solidcraft/panpipes-tubes-octagon-two-rows-plain.solidcraft.json`
-- `solidcraft/panpipes-tubes-hex-zigzag-chamfer.solidcraft.json`
-- `solidcraft/panpipes-tubes-hex-zigzag-plain.solidcraft.json`
-- `solidcraft/panpipes-tubes-hex-zigzag-notch.solidcraft.json`
-- `solidcraft/panpipes-tubes-hex-row-chamfer.solidcraft.json`
-- `solidcraft/panpipes-tubes-hex-row-plain.solidcraft.json`
+Open a `.sc` in SolidCraft. The parameters are under the **SOLID** tab, **MODIFY**
+panel, **Change Parameters**; the Browser lists the parts and the timeline every step.
+The `.solidcraft.json` beside it is the script it was built from (`solidcraft-cli run
+FILE --save NAME.sc`). The `.sc` holds the design without SolidCraft's build cache,
+which it rebuilds on opening, so it is the same file every time. A STEP file in
+`step/` is the built parts only, with no parameters:
+
+- `solidcraft/panpipes-chamfer-edge.sc` · `solidcraft/panpipes-chamfer-edge.solidcraft.json`
+- `solidcraft/panpipes-plain-edge.sc` · `solidcraft/panpipes-plain-edge.solidcraft.json`
+- `solidcraft/panpipes-notch-edge.sc` · `solidcraft/panpipes-notch-edge.solidcraft.json`
+- `solidcraft/panpipes-strip-edge.sc` · `solidcraft/panpipes-strip-edge.solidcraft.json`
+- `solidcraft/panpipes-tubes-octagon-row-chamfer.sc` · `solidcraft/panpipes-tubes-octagon-row-chamfer.solidcraft.json`
+- `solidcraft/panpipes-tubes-octagon-row-plain.sc` · `solidcraft/panpipes-tubes-octagon-row-plain.solidcraft.json`
+- `solidcraft/panpipes-tubes-octagon-row-notch.sc` · `solidcraft/panpipes-tubes-octagon-row-notch.solidcraft.json`
+- `solidcraft/panpipes-tubes-octagon-two-rows-chamfer.sc` · `solidcraft/panpipes-tubes-octagon-two-rows-chamfer.solidcraft.json`
+- `solidcraft/panpipes-tubes-octagon-two-rows-plain.sc` · `solidcraft/panpipes-tubes-octagon-two-rows-plain.solidcraft.json`
+- `solidcraft/panpipes-tubes-hex-zigzag-chamfer.sc` · `solidcraft/panpipes-tubes-hex-zigzag-chamfer.solidcraft.json`
+- `solidcraft/panpipes-tubes-hex-zigzag-plain.sc` · `solidcraft/panpipes-tubes-hex-zigzag-plain.solidcraft.json`
+- `solidcraft/panpipes-tubes-hex-zigzag-notch.sc` · `solidcraft/panpipes-tubes-hex-zigzag-notch.solidcraft.json`
+- `solidcraft/panpipes-tubes-hex-row-chamfer.sc` · `solidcraft/panpipes-tubes-hex-row-chamfer.solidcraft.json`
+- `solidcraft/panpipes-tubes-hex-row-plain.sc` · `solidcraft/panpipes-tubes-hex-row-plain.solidcraft.json`
 
 | Parameter | Default | What it is |
 |---|---|---|
