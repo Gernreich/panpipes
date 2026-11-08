@@ -126,3 +126,14 @@ turn-tubes.html :: target/release/tube_panpipes --page-to=$OUT
 # --- the pages ---
 turn.html :: target/release/panpipes --page-to=$OUT
 index.html :: ../lasermade-tools/target/release/md2html README.md $OUT
+
+# --- the STEP files: the 3D view's parts as solids for a CAD program, one
+# file per design, written from the page by lasermade-tools' step-export ---
+step/panpipes-chamfer-edge.step :: ../lasermade-tools/target/release/step-export turn.html --name=panpipes --out=$(dirname $OUT)
+step/panpipes-plain-edge.step :: ../lasermade-tools/target/release/step-export turn.html --name=panpipes --out=$(dirname $OUT)
+step/panpipes-notch-edge.step :: ../lasermade-tools/target/release/step-export turn.html --name=panpipes --out=$(dirname $OUT)
+step/panpipes-strip-edge.step :: ../lasermade-tools/target/release/step-export turn.html --name=panpipes --out=$(dirname $OUT)
+step/panpipes-tubes-octagon-row.step :: ../lasermade-tools/target/release/step-export turn-tubes.html --name=panpipes-tubes --out=$(dirname $OUT)
+step/panpipes-tubes-octagon-two-rows.step :: ../lasermade-tools/target/release/step-export turn-tubes.html --name=panpipes-tubes --out=$(dirname $OUT)
+step/panpipes-tubes-hex-zigzag.step :: ../lasermade-tools/target/release/step-export turn-tubes.html --name=panpipes-tubes --out=$(dirname $OUT)
+step/panpipes-tubes-hex-row.step :: ../lasermade-tools/target/release/step-export turn-tubes.html --name=panpipes-tubes --out=$(dirname $OUT)
