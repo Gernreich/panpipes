@@ -478,6 +478,17 @@ from `turn.html` and `turn-tubes.html` by lasermade-tools' `step-export`, and `.
 ../lasermade-tools/target/release/step-export turn-tubes.html --name=panpipes-tubes
 ```
 
+The files:
+
+- `step/panpipes-chamfer-edge.step`
+- `step/panpipes-notch-edge.step`
+- `step/panpipes-plain-edge.step`
+- `step/panpipes-strip-edge.step`
+- `step/panpipes-tubes-hex-row.step`
+- `step/panpipes-tubes-hex-zigzag.step`
+- `step/panpipes-tubes-octagon-row.step`
+- `step/panpipes-tubes-octagon-two-rows.step`
+
 ## Credits
 
 Made by Michael Gernreich with [Claude](https://www.anthropic.com/claude) (Anthropic), working in Claude Code, which co-wrote the code and the documentation. Commits Claude made carry a `Co-Authored-By: Claude` line.
